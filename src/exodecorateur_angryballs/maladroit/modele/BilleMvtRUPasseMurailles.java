@@ -14,28 +14,28 @@ import mesmaths.geometrie.base.Vecteur;
  *  
  *  */
 
-public class BilleMvtRUPasseMurailles extends Bille
-{
+public class BilleMvtRUPasseMurailles extends Bille {
 
-/**
+    /**
      * @param centre
      * @param rayon
      * @param vitesse
      * @param couleur
      */
-    public BilleMvtRUPasseMurailles(Vecteur centre, double rayon,
-            Vecteur vitesse, Color couleur)
-    {
-    super(centre, rayon, vitesse, couleur);
+    public BilleMvtRUPasseMurailles(Vecteur centre, double rayon, Vecteur vitesse, Color couleur) {
+        super(centre, rayon, vitesse, couleur);
     }
 
-@Override
-public void collisionContour(double abscisseCoinHautGauche,
-        double ordonnéeCoinHautGauche, double largeur, double hauteur)
-{
-Collisions.collisionBilleContourPasseMuraille( this.getPosition(), abscisseCoinHautGauche, ordonnéeCoinHautGauche, largeur, hauteur);
+    @Override
+    public void collisionContour(double abscisseCoinHautGauche, double ordonnéeCoinHautGauche,
+                                 double largeur, double hauteur) {
+        Collisions.collisionBilleContourPasseMuraille(
+                this.getPosition(),
+                abscisseCoinHautGauche, ordonnéeCoinHautGauche,
+                largeur, hauteur
+        );
 
-}
+    }
 
 }
 

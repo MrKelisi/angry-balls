@@ -18,35 +18,29 @@ import mesmaths.mecanique.MecaniquePoint;
 public class BilleMvtNewtonFrottementRebond extends Bille
 {
 
-public BilleMvtNewtonFrottementRebond(Vecteur centre, double rayon,
-        Vecteur vitesse, Color couleur)
-{
-super(centre, rayon, vitesse, couleur);
-}
+    public BilleMvtNewtonFrottementRebond(Vecteur centre, double rayon, Vecteur vitesse, Color couleur) {
+        super(centre, rayon, vitesse, couleur);
+    }
 
+    /* (non-Javadoc)
+     * @see decorateur_angryballs.modele.Bille#gestionAccélération(java.util.Vector)
+     */
+    @Override
+    public void gestionAccélération(Vector<Bille> billes) {
+        super.gestionAccélération(billes);                              // remise à zéro du vecteur accélération
+        this.getAccélération().ajoute(OutilsBille.gestionAccélérationNewton(this, billes));     // contribution de l'accélération due à l'attraction des autres billes
+        this.getAccélération().ajoute(MecaniquePoint.freinageFrottement(this.masse(), this.getVitesse()));      // contribution de l'accélération due au frottement dans l'air
+    }
 
-
-
-/* (non-Javadoc)
- * @see decorateur_angryballs.modele.Bille#gestionAccélération(java.util.Vector)
- */
-@Override
-public void gestionAccélération(Vector<Bille> billes)
-{
-super.gestionAccélération(billes);                              // remise à zéro du vecteur accélération
-this.getAccélération().ajoute(OutilsBille.gestionAccélérationNewton(this, billes));     // contribution de l'accélération due à l'attraction des autres billes
-this.getAccélération().ajoute(MecaniquePoint.freinageFrottement(this.masse(), this.getVitesse()));      // contribution de l'accélération due au frottement dans l'air
-}
-
-
-
-
-@Override
-public void collisionContour(double abscisseCoinHautGauche,
-        double ordonnéeCoinHautGauche, double largeur, double hauteur)
-{
-Collisions.collisionBilleContourAvecRebond(this.getPosition(), this.getRayon(), this.getVitesse(), abscisseCoinHautGauche, ordonnéeCoinHautGauche, largeur, hauteur);
-
-}
-
+    @Override
+    public void collisionContour(double abscisseCoinHautGauche, double ordonnéeCoinHautGauche,
+                                 double largeur, double hauteur) {
+        Collisions.collisionBilleContourAvecRebond(
+                this.getPosition(),
+                this.getRayon(),
+                this.getVitesse(),
+                abscisseCoinHautGauche, ordonnéeCoinHautGauche,
+                largeur, hauteur
+        );
+    }
 }

@@ -12,12 +12,11 @@ package exodecorateur_angryballs.maladroit.vues;
  * */
 public interface VueBillard
 {
+    public double largeurBillard();
 
-public double largeurBillard();
+    public double hauteurBillard();
 
-public double hauteurBillard();
+    public void miseAJour();
 
-public void miseAJour();
-
-public void montrer();
+    public void montrer();
 }
