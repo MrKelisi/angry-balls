@@ -86,7 +86,7 @@ public class TestAngryBalls {
 
         EcouteurBoutonLancer écouteurBoutonLancer = new EcouteurBoutonLancer(animationBilles);
         EcouteurBoutonArreter écouteurBoutonArrêter = new EcouteurBoutonArreter(animationBilles);
-        EcouteurCreationBille ecouteurCreationBille = new EcouteurCreationBille(animationBilles, cadre.droite.getSelectedDecorators(), rayon);
+        EcouteurCreationBille ecouteurCreationBille = new EcouteurCreationBille(animationBilles, cadre.droite.getDecorators(), rayon);
 
         //------------------------- activation des écouteurs des boutons et ça tourne tout seul ------------------------------
 

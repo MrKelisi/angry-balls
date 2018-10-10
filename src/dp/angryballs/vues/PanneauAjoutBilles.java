@@ -5,13 +5,12 @@ import dp.angryballs.modele.DecorateurBille;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class PanneauAjoutBilles extends Panel {
     private Label labelAjoutBilles;
-    private DecorateurComboBox availableDecorators;
-    private DecorateurJList selectedDecorators;
-    private Button addButton;
+    private ArrayList<BoutonComportement> listDecorators = new ArrayList<>();
     private Button createButton;
 
     public PanneauAjoutBilles() {
@@ -20,16 +19,12 @@ public class PanneauAjoutBilles extends Panel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         labelAjoutBilles = new Label("Création de billes");
-        availableDecorators = new DecorateurComboBox();
-        selectedDecorators = new DecorateurJList();
         createButton = new Button("Créer");
-        addButton = new Button("Ajouter le décorateur");
-        addButton.addActionListener(new EcouteurBoutonAjouterDecorateur(availableDecorators, selectedDecorators));
 
         try {
             Collection<Class<? extends DecorateurBille>> classes = Outils.getClasses("dp.angryballs.modele.comportements", DecorateurBille.class);
             for(Class<? extends DecorateurBille> c : classes) {
-                availableDecorators.ajouterDecorateur(c);
+                listDecorators.add(new BoutonComportement(c));
             }
         }
         catch (Exception e) {
@@ -37,9 +32,7 @@ public class PanneauAjoutBilles extends Panel {
         }
 
         add(labelAjoutBilles);
-        add(selectedDecorators);
-        add(availableDecorators);
-        add(addButton);
+        for(BoutonComportement bc : listDecorators) add(bc.getCheckbox());
         add(createButton);
     }
 
@@ -47,7 +40,7 @@ public class PanneauAjoutBilles extends Panel {
         return createButton;
     }
 
-    public DecorateurJList getSelectedDecorators() {
-        return selectedDecorators;
+    public ArrayList<BoutonComportement> getDecorators() {
+        return listDecorators;
     }
 }

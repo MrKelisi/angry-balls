@@ -2,29 +2,29 @@ package dp.angryballs;
 
 import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.BilleNue;
-import dp.angryballs.modele.DecorateurBille;
-import dp.angryballs.vues.ListeDecorateurSelectionnes;
+import dp.angryballs.vues.BoutonComportement;
 import mesmaths.geometrie.base.Vecteur;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class EcouteurCreationBille implements ActionListener {
     private AnimationBilles animationBilles;
-    private ListeDecorateurSelectionnes listeDecorateurSelectionnes;
+    private ArrayList<BoutonComportement> listeDecorateurs;
     private double rayon;
 
-    public EcouteurCreationBille(AnimationBilles animationBilles, ListeDecorateurSelectionnes decorateurSelectionnes, double rayon) {
+    public EcouteurCreationBille(AnimationBilles animationBilles, ArrayList<BoutonComportement> listeDecorateurs, double rayon) {
         if(animationBilles == null) {
-            throw new NullPointerException("AnimationBilles null");
+            throw new NullPointerException("animationBilles null");
         }
-        if(decorateurSelectionnes == null) {
-            throw new NullPointerException("ListeDecorateurSelectionnes null");
+        if(listeDecorateurs == null) {
+            throw new NullPointerException("listeDecorateurs null");
         }
 
         this.animationBilles = animationBilles;
-        this.listeDecorateurSelectionnes = decorateurSelectionnes;
+        this.listeDecorateurs = listeDecorateurs;
         this.rayon = rayon;
     }
 
@@ -34,9 +34,10 @@ public class EcouteurCreationBille implements ActionListener {
         Vecteur v = Vecteur.créationAléatoire(-0.1, -0.1, 0.1, 0.1); //TODO changer les valeurs
         Bille bille = new BilleNue(p, rayon, v, Color.BLACK); //TODO: changer les valeurs
 
-        for(Class<? extends DecorateurBille> decorateur : listeDecorateurSelectionnes.getDecorateurs()) {
+        for(BoutonComportement bc : listeDecorateurs) {
             try {
-                bille = decorateur.getConstructor(Bille.class).newInstance(bille);
+                if(bc.getCheckbox().isSelected())
+                    bille = bc.getDecorateur().getConstructor(Bille.class).newInstance(bille);
             }
             catch (Exception e) {
                 System.err.println(e.getMessage());
