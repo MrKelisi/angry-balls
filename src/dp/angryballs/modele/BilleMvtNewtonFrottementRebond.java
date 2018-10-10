@@ -1,4 +1,4 @@
-package exodecorateur_angryballs.maladroit.modele;
+package dp.angryballs.modele;
 
 import java.awt.Color;
 import java.util.Vector;
@@ -9,16 +9,17 @@ import mesmaths.mecanique.MecaniquePoint;
 
 /**
  * 
- * Bille s'arrêtant sur les bords et subissant l'attraction des autres billes
+ * Bille rebondissant sur les bords, subissant le frottement dans l'air et subissant l'attraction des autres billes
  * 
  * 
  *  A MODIFIER
  *  
  *  */
+public class BilleMvtNewtonFrottementRebond extends Bille
+{
 
-public class BilleMvtNewtonArret extends Bille {
-    public BilleMvtNewtonArret(Vecteur position, double rayon, Vecteur vitesse, Color couleur) {
-        super(position, rayon, vitesse, couleur);
+    public BilleMvtNewtonFrottementRebond(Vecteur centre, double rayon, Vecteur vitesse, Color couleur) {
+        super(centre, rayon, vitesse, couleur);
     }
 
     /* (non-Javadoc)
@@ -28,24 +29,18 @@ public class BilleMvtNewtonArret extends Bille {
     public void gestionAccélération(Vector<Bille> billes) {
         super.gestionAccélération(billes);                              // remise à zéro du vecteur accélération
         this.getAccélération().ajoute(OutilsBille.gestionAccélérationNewton(this, billes));     // contribution de l'accélération due à l'attraction des autres billes
+        this.getAccélération().ajoute(MecaniquePoint.freinageFrottement(this.masse(), this.getVitesse()));      // contribution de l'accélération due au frottement dans l'air
     }
 
     @Override
     public void collisionContour(double abscisseCoinHautGauche, double ordonnéeCoinHautGauche,
                                  double largeur, double hauteur) {
-        Collisions.collisionBilleContourAvecArretHorizontal(
+        Collisions.collisionBilleContourAvecRebond(
                 this.getPosition(),
                 this.getRayon(),
                 this.getVitesse(),
-                abscisseCoinHautGauche,
-                largeur
-        );
-        Collisions.collisionBilleContourAvecArretVertical(
-                this.getPosition(),
-                this.getRayon(),
-                this.getVitesse(),
-                ordonnéeCoinHautGauche,
-                hauteur
+                abscisseCoinHautGauche, ordonnéeCoinHautGauche,
+                largeur, hauteur
         );
     }
 }

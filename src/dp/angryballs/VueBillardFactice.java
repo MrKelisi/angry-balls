@@ -1,6 +1,6 @@
-package exodecorateur_angryballs.maladroit;
+package dp.angryballs;
 
-import exodecorateur_angryballs.maladroit.vues.VueBillard;
+import dp.angryballs.vues.VueBillard;
 
 public class VueBillardFactice implements VueBillard {
     @Override

@@ -1,10 +1,9 @@
-package exodecorateur_angryballs.maladroit.modele;
+package dp.angryballs.modele;
 
 import java.awt.*;
 import java.util.Vector;
 
 import mesmaths.cinematique.Cinematique;
-import mesmaths.cinematique.Collisions;
 import mesmaths.geometrie.base.Geop;
 import mesmaths.geometrie.base.Vecteur;
 

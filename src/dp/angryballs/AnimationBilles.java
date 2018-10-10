@@ -1,9 +1,9 @@
-package exodecorateur_angryballs.maladroit;
+package dp.angryballs;
 
 import java.util.Vector;
 
-import exodecorateur_angryballs.maladroit.modele.Bille;
-import exodecorateur_angryballs.maladroit.vues.VueBillard;
+import dp.angryballs.modele.Bille;
+import dp.angryballs.vues.VueBillard;
 
 /**
  * responsable de l'animation des billes, c-à-d responsable du mouvement de la liste des billes. met perpétuellement à jour les billes. 

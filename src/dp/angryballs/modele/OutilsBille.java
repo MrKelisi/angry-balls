@@ -1,4 +1,4 @@
-package exodecorateur_angryballs.maladroit.modele;
+package dp.angryballs.modele;
 
 import java.util.Vector;
 

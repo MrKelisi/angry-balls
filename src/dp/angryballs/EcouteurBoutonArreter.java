@@ -1,4 +1,4 @@
-package exodecorateur_angryballs.maladroit;
+package dp.angryballs;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

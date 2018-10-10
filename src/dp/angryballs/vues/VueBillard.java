@@ -1,4 +1,4 @@
-package exodecorateur_angryballs.maladroit.vues;
+package dp.angryballs.vues;
 
 
 /**
