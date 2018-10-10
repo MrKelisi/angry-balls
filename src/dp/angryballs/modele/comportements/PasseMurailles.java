@@ -11,10 +11,10 @@ public class PasseMurailles extends DecorateurBille {
     }
 
     @Override
-    public void collisionContour(double abscisseCoinHautGauche, double ordonnéeCoinHautGauche, double largeur, double hauteur) {
+    public void collisionContour(double abscisseCoinHautGauche, double ordonneeCoinHautGauche, double largeur, double hauteur) {
         Collisions.collisionBilleContourPasseMuraille(
                 this.getPosition(),
-                abscisseCoinHautGauche, ordonnéeCoinHautGauche,
+                abscisseCoinHautGauche, ordonneeCoinHautGauche,
                 largeur, hauteur
         );
     }

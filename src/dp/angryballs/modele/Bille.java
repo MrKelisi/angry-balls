@@ -14,12 +14,11 @@ public interface Bille {
     double getRayon();
     double masse();
 
-    void collisionContour(double abscisseCoinHautGauche, double ordonnéeCoinHautGauche, double largeur, double hauteur);
+    void setRayon(double rayon);
+
+    void collisionContour(double abscisseCoinHautGauche, double ordonneeCoinHautGauche, double largeur, double hauteur);
     void gestionAcceleration(Vector<Bille> billes);
     void dessine (Graphics g);
     void deplacer(double deltaT);
     boolean gestionCollisionBilleBille(Vector<Bille> billes);
-    String toString();
-
-    void setRayon(double rayon);
 }

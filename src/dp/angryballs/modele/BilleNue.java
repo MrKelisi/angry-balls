@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.Vector;
 
 import mesmaths.cinematique.Cinematique;
+import mesmaths.cinematique.Collisions;
 import mesmaths.geometrie.base.Geop;
 import mesmaths.geometrie.base.Vecteur;
 
@@ -22,11 +23,11 @@ public class BilleNue implements Bille {
 
     protected BilleNue(Vecteur centre, double rayon, Vecteur vitesse, Vecteur acceleration, Color couleur) {
         this.position     = centre;
-        setRayon(rayon);
         this.vitesse      = vitesse;
         this.acceleration = acceleration;
         this.couleur      = couleur;
         this.clef         = BilleNue.prochaineClef++;
+        setRayon(rayon);
     }
 
     public BilleNue(Vecteur position, double rayon, Vecteur vitesse, Color couleur) {
@@ -62,6 +63,14 @@ public class BilleNue implements Bille {
     @Override
     public double masse() {
         return ro*Geop.volumeSphère(rayon);
+    }
+
+    @Override
+    public void setRayon(double rayon) {
+        if(rayon < 0) {
+            throw new IllegalArgumentException("Rayon < 0");
+        }
+        this.rayon = rayon;
     }
 
 
@@ -108,10 +117,15 @@ public class BilleNue implements Bille {
      * gestion de l'éventuelle collision de la bille (this) avec le contour rectangulaire de l'écran défini par (abscisseCoinHautGauche, ordonnéeCoinHautGauche, largeur, hauteur)
      * détecte si il y a collision et le cas échéant met à jour position et vitesse
      * La nature du comportement de la bille en réponse à cette collision est définie dans les classes dérivées
+     * PAR DÉFAUT, la bille passe à travers les murs et se téléporte (PasseMurailles)
      * */
     @Override
-    public void collisionContour(double abscisseCoinHautGauche, double ordonnéeCoinHautGauche, double largeur, double hauteur) {
-
+    public void collisionContour(double abscisseCoinHautGauche, double ordonneeCoinHautGauche, double largeur, double hauteur) {
+        Collisions.collisionBilleContourPasseMuraille(
+                this.getPosition(),
+                abscisseCoinHautGauche, ordonneeCoinHautGauche,
+                largeur, hauteur
+        );
     }
 
     @Override
@@ -135,12 +149,5 @@ public class BilleNue implements Bille {
         return "\n{\n\tclef = " + clef + "\n\tcentre = " + position + " \n\trayon = "+rayon +  " \n\tvitesse = " + vitesse + " \n\tacceleration = " + acceleration + " \n\tcouleur = " + couleur + "\n}\n";
     }
 
-    @Override
-    public void setRayon(double rayon) {
-        if(rayon < 0) {
-            throw new IllegalArgumentException("Rayon < 0");
-        }
-        this.rayon = rayon;
-    }
 }
 

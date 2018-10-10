@@ -11,12 +11,12 @@ public class Rebond extends DecorateurBille {
     }
 
     @Override
-    public void collisionContour(double abscisseCoinHautGauche, double ordonnéeCoinHautGauche, double largeur, double hauteur) {
+    public void collisionContour(double abscisseCoinHautGauche, double ordonneeCoinHautGauche, double largeur, double hauteur) {
         Collisions.collisionBilleContourAvecRebond(
                 getPosition(),
                 getRayon(),
                 getVitesse(),
-                abscisseCoinHautGauche, ordonnéeCoinHautGauche,
+                abscisseCoinHautGauche, ordonneeCoinHautGauche,
                 largeur, hauteur
         );
     }

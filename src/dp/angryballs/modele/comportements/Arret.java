@@ -11,7 +11,7 @@ public class Arret extends DecorateurBille {
     }
 
     @Override
-    public void collisionContour(double abscisseCoinHautGauche, double ordonnéeCoinHautGauche, double largeur, double hauteur) {
+    public void collisionContour(double abscisseCoinHautGauche, double ordonneeCoinHautGauche, double largeur, double hauteur) {
         Collisions.collisionBilleContourAvecArretHorizontal(
                 this.getPosition(),
                 this.getRayon(),
@@ -23,7 +23,7 @@ public class Arret extends DecorateurBille {
                 this.getPosition(),
                 this.getRayon(),
                 this.getVitesse(),
-                ordonnéeCoinHautGauche,
+                ordonneeCoinHautGauche,
                 hauteur
         );
     }

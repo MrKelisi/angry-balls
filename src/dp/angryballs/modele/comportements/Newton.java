@@ -3,7 +3,6 @@ package dp.angryballs.modele.comportements;
 import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.DecorateurBille;
 import dp.angryballs.modele.OutilsBille;
-import mesmaths.geometrie.base.Vecteur;
 
 import java.util.Vector;
 
