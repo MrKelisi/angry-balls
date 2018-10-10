@@ -4,6 +4,8 @@ import java.awt.*;
 import java.util.Vector;
 
 import dp.angryballs.modele.Bille;
+import dp.angryballs.modele.Forme;
+import dp.angryballs.modele.VisiteurForme;
 
 
 /**
@@ -13,11 +15,12 @@ import dp.angryballs.modele.Bille;
  *  
  * 
  * */
-public class Billard extends Canvas {
-    Vector<Bille> billes;
+public class Billard extends Canvas implements VisiteurForme {
+    Vector<Forme> formes;
+    Graphics g;
 
-    public Billard(Vector<Bille> billes) {
-        this.billes = billes;
+    public Billard(Vector<Forme> formes) {
+        this.formes = formes;
     }
 
     /* (non-Javadoc)
@@ -25,11 +28,28 @@ public class Billard extends Canvas {
      */
     @Override
     public void paint(Graphics graphics) {
+        g = graphics;
         graphics.clearRect(0,0, getWidth(), getHeight());
         int i;
 
-        for (i = 0; i < this.billes.size(); ++i) {
-            this.billes.get(i).dessine(graphics);
+        for(Forme forme : formes) {
+            forme.visite(this);
         }
+    }
+
+    @Override
+    public void visite(Bille bille) {
+        int width, height;
+        int xMin, yMin;
+
+        xMin = (int)Math.round(bille.getPosition().x - bille.getRayon());
+        yMin = (int)Math.round(bille.getPosition().y - bille.getRayon());
+
+        width = height = 2 * (int) Math.round(bille.getRayon());
+
+        g.setColor(bille.getColor());
+        g.fillOval( xMin, yMin, width, height);
+        g.setColor(bille.getColor().brighter());
+        g.drawOval(xMin, yMin, width, height);
     }
 }

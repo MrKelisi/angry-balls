@@ -54,13 +54,8 @@ public abstract class DecorateurBille implements Bille {
     }
 
     @Override
-    public void gestionAcceleration(Vector<Bille> billes) {
+    public void gestionAcceleration(Vector<Forme> billes) {
         billeDecoree.gestionAcceleration(billes);
-    }
-
-    @Override
-    public void dessine (Graphics g) {
-        billeDecoree.dessine(g);
     }
 
     @Override
@@ -69,8 +64,8 @@ public abstract class DecorateurBille implements Bille {
     }
 
     @Override
-    public boolean gestionCollisionBilleBille(Vector<Bille> billes) {
-        return billeDecoree.gestionCollisionBilleBille(billes);
+    public void gestionCollision(Vector<Forme> billes) {
+        billeDecoree.gestionCollision(billes);
     }
 
     @Override
@@ -78,4 +73,13 @@ public abstract class DecorateurBille implements Bille {
         return billeDecoree.toString();
     }
 
+    @Override
+    public Color getColor() {
+        return billeDecoree.getColor();
+    }
+
+    @Override
+    public void visite(VisiteurForme v) {
+        billeDecoree.visite(v);
+    }
 }

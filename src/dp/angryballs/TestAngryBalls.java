@@ -4,11 +4,10 @@ import java.awt.Color;
 import java.util.Vector;
 
 import dp.angryballs.modele.BilleNue;
+import dp.angryballs.modele.Forme;
 import dp.angryballs.modele.comportements.*;
 import dp.angryballs.vues.CadreAngryBalls;
 import mesmaths.geometrie.base.Vecteur;
-
-import dp.angryballs.modele.Bille;
 
 /**
  * Gestion d'une liste de billes en mouvement ayant toutes un comportement différent
@@ -19,7 +18,7 @@ public class TestAngryBalls {
     public static void main(String[] args) {
         //------------------- création de la liste (pour l'instant vide) des billes -----------------------
 
-        Vector<Bille> billes = new Vector<Bille>();
+        Vector<Forme> billes = new Vector<>();
 
         //---------------- création de la vue responsable du dessin des billes -------------------------
 
@@ -69,7 +68,7 @@ public class TestAngryBalls {
         billes.add(new BilleMvtNewtonArret(p4, rayon, v4,  Color.black));
         */
 
-        billes.add(new Rebond(new RectiligneUniforme(new BilleNue(p0, rayon * 3, new Vecteur(0,0), Color.red))));
+        billes.add(new Rebond(new RectiligneUniforme(new BilleNue(p0, rayon * 3, new Vecteur(0.01,0.01), Color.red))));
 
 
         //---------------------- ici finit la partie à changer -------------------------------------------------------------

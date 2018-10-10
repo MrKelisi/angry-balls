@@ -2,7 +2,7 @@ package dp.angryballs.vues;
 
 import java.util.Vector;
 
-import dp.angryballs.modele.Bille;
+import dp.angryballs.modele.Forme;
 
 
 public class TestCadreAngryBallsSeul {
@@ -10,7 +10,7 @@ public class TestCadreAngryBallsSeul {
      * @param args
      */
     public static void main(String[] args) {
-        Vector<Bille> billes = new Vector<>();
+        Vector<Forme> billes = new Vector<>();
         CadreAngryBalls cadre = new CadreAngryBalls("angry balls", "animation de billes marrantes", billes);
         cadre.montrer();
     }

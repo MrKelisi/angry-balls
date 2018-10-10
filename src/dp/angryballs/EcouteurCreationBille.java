@@ -44,6 +44,6 @@ public class EcouteurCreationBille implements ActionListener {
             }
         }
 
-        animationBilles.ajouterBille(bille);
+        animationBilles.ajouterForme(bille);
     }
 }
