@@ -3,12 +3,12 @@ package dp.angryballs.modele;
 import java.awt.*;
 import java.util.Vector;
 
+import dp.angryballs.CollisionBille;
 import mesmaths.cinematique.Cinematique;
 import mesmaths.geometrie.base.Geop;
 import mesmaths.geometrie.base.Vecteur;
 
 public class BilleNue implements Bille {
-
     private Vecteur position;       // centre de la bille
     private Vecteur vitesse;
     private Vecteur acceleration;
@@ -85,7 +85,7 @@ public class BilleNue implements Bille {
      * A ce niveau le vecteur acceleration est mis à zéro (c'est à dire pas d'acceleration)
      * */
     @Override
-    public void gestionAcceleration(Vector<Bille> billes) {
+    public void gestionAcceleration(Vector<Forme> billes) {
         this.getAcceleration().set(Vecteur.VECTEURNUL);
     }
 
@@ -99,8 +99,9 @@ public class BilleNue implements Bille {
      * si renvoie false, il n'y a pas de collision et les billes sont laissées intactes
      * */
     @Override
-    public boolean gestionCollisionBilleBille(Vector<Bille> billes) {
-        return OutilsBille.gestionCollisionBilleBille(this, billes);
+    public void gestionCollisionBille(Vector<Forme> formes) {
+        CollisionBille collisionBille = new CollisionBille(this);
+        collisionBille.tester(formes);
     }
 
 
@@ -115,22 +116,6 @@ public class BilleNue implements Bille {
     }
 
     @Override
-    public void dessine (Graphics g) {
-        int width, height;
-        int xMin, yMin;
-
-        xMin = (int)Math.round(position.x-rayon);
-        yMin = (int)Math.round(position.y-rayon);
-
-        width = height = 2*(int)Math.round(rayon);
-
-        g.setColor(couleur);
-        g.fillOval( xMin, yMin, width, height);
-        g.setColor(Color.CYAN);
-        g.drawOval(xMin, yMin, width, height);
-    }
-
-    @Override
     public String toString() {
         return "\n{\n\tclef = " + clef + "\n\tcentre = " + position + " \n\trayon = "+rayon +  " \n\tvitesse = " + vitesse + " \n\tacceleration = " + acceleration + " \n\tcouleur = " + couleur + "\n}\n";
     }
@@ -141,6 +126,16 @@ public class BilleNue implements Bille {
             throw new IllegalArgumentException("Rayon < 0");
         }
         this.rayon = rayon;
+    }
+
+    @Override
+    public void visite(VisiteurForme v) {
+        v.visite(this);
+    }
+
+    @Override
+    public Color getColor() {
+        return couleur;
     }
 }
 

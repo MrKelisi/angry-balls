@@ -3,6 +3,8 @@ package dp.angryballs;
 import java.util.Vector;
 
 import dp.angryballs.modele.Bille;
+import dp.angryballs.modele.Forme;
+import dp.angryballs.modele.VisiteurForme;
 import dp.angryballs.vues.VueBillard;
 
 /**
@@ -11,54 +13,38 @@ import dp.angryballs.vues.VueBillard;
  * 
  * ICI : IL N'Y A RIEN A CHANGER
  * */
-public class AnimationBilles  implements Runnable {
-    Vector<Bille> billes;   // la liste de toutes les billes en mouvement
+public class AnimationBilles implements Runnable, VisiteurForme {
+    Vector<Forme> formes;   // la liste de toutes les billes en mouvement
     VueBillard vueBillard;    // la vue responsable du dessin des billes
     private Thread thread;    // pour lancer et arrêter les billes
+    private double deltaT;
 
     private static final double COEFF = 0.5;
 
     /**
-     * @param billes
+     * @param formes
      * @param vueBillard
      */
-    public AnimationBilles(Vector<Bille> billes, VueBillard vueBillard) {
-        this.billes = billes;
+    public AnimationBilles(Vector<Forme> formes, VueBillard vueBillard) {
+        this.formes = formes;
         this.vueBillard = vueBillard;
-        this.thread = null;     //est-ce utile ?
+        deltaT = 10;
     }
 
-    public void ajouterBille(Bille bille) {
-        billes.add(bille);
+    public void ajouterForme(Forme forme) {
+        formes.add(forme);
     }
 
     @Override
     public void run() {
         try {
-            double deltaT;  // délai entre 2 mises à jour de la liste des billes
-            Bille billeCourante;
-
-            double minRayons = AnimationBilles.minRayons(billes);   //nécessaire au calcul de deltaT
-            double minRayons2 = minRayons*minRayons;                //nécessaire au calcul de deltaT
-
             while (!Thread.interrupted()) {                         // gestion du mouvement
-                //deltaT = COEFF*minRayons2/(1+maxVitessesCarrées(billes));       // mise à jour deltaT. L'addition + 1 est une astuce pour éviter les divisions par zéro
-                deltaT = 10;
-
-                int i;
-                for (i = 0; i < billes.size(); ++i) {    // mise à jour de la liste des billes
-
-                    billeCourante = billes.get(i);
-                    billeCourante.deplacer(deltaT);                 // mise à jour position et vitesse de cette bille
-                    billeCourante.gestionAcceleration(billes);      // calcul de l'accélération subie par cette bille
-                    billeCourante.gestionCollisionBilleBille(billes);
-                    billeCourante.collisionContour( 0, 0, vueBillard.largeurBillard(), vueBillard.hauteurBillard());        //System.err.println("billes = " + billes);
+                for(Forme forme : formes) {
+                    forme.visite(this);
                 }
 
                 vueBillard.miseAJour();                                // on prévient la vue qu'il faut redessiner les billes
-
-
-                Thread.sleep((int)deltaT);                          // deltaT peut être considéré comme le délai entre 2 flashes d'un stroboscope qui éclairerait la scène
+                Thread.sleep((int) deltaT);                          // deltaT peut être considéré comme le délai entre 2 flashes d'un stroboscope qui éclairerait la scène
             }
         }
         catch (InterruptedException e) {
@@ -118,5 +104,14 @@ public class AnimationBilles  implements Runnable {
             this.thread.interrupt();
             this.thread = null;
         }
+    }
+
+    @Override
+    public void visite(Bille bille) {
+        bille.deplacer(deltaT);                 // mise à jour position et vitesse de cette bille
+        bille.gestionAcceleration(formes);      // calcul de l'accélération subie par cette bille
+        bille.gestionCollisionBille(formes);
+        bille.collisionContour( 0, 0, vueBillard.largeurBillard(), vueBillard.hauteurBillard());
+
     }
 }

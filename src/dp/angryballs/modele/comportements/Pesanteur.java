@@ -2,6 +2,7 @@ package dp.angryballs.modele.comportements;
 
 import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.DecorateurBille;
+import dp.angryballs.modele.Forme;
 import mesmaths.geometrie.base.Vecteur;
 
 import java.util.Vector;
@@ -20,8 +21,8 @@ public class Pesanteur extends DecorateurBille {
     }
 
     @Override
-    public void gestionAcceleration(Vector<Bille> billes) {
-        billeDecoree.gestionAcceleration(billes);
+    public void gestionAcceleration(Vector<Forme> formes) {
+        billeDecoree.gestionAcceleration(formes);
         getAcceleration().ajoute(pesanteur);
     }
 }

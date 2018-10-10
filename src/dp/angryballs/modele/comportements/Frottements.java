@@ -2,6 +2,7 @@ package dp.angryballs.modele.comportements;
 
 import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.DecorateurBille;
+import dp.angryballs.modele.Forme;
 import dp.angryballs.modele.OutilsBille;
 import mesmaths.geometrie.base.Vecteur;
 import mesmaths.mecanique.MecaniquePoint;
@@ -15,8 +16,8 @@ public class Frottements extends DecorateurBille {
     }
 
     @Override
-    public void gestionAcceleration(Vector<Bille> billes) {
-        billeDecoree.gestionAcceleration(billes);
+    public void gestionAcceleration(Vector<Forme> formes) {
+        billeDecoree.gestionAcceleration(formes);
         getAcceleration().ajoute(MecaniquePoint.freinageFrottement(masse(), getVitesse()));
     }
 }

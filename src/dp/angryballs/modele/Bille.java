@@ -1,24 +1,13 @@
 package dp.angryballs.modele;
 
-import mesmaths.geometrie.base.Vecteur;
-
-import java.awt.*;
 import java.util.Vector;
 
-public interface Bille {
-
-    Vecteur getPosition();
-    Vecteur getVitesse();
-    Vecteur getAcceleration();
-    int getClef();
+public interface Bille extends Forme {
     double getRayon();
-    double masse();
 
     void collisionContour(double abscisseCoinHautGauche, double ordonnéeCoinHautGauche, double largeur, double hauteur);
-    void gestionAcceleration(Vector<Bille> billes);
-    void dessine (Graphics g);
-    void deplacer(double deltaT);
-    boolean gestionCollisionBilleBille(Vector<Bille> billes);
+    void gestionAcceleration(Vector<Forme> billes);
+    void gestionCollisionBille(Vector<Forme> billes);
     String toString();
 
     void setRayon(double rayon);
