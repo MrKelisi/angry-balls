@@ -22,7 +22,7 @@ public class BilleNue implements Bille {
 
     protected BilleNue(Vecteur centre, double rayon, Vecteur vitesse, Vecteur acceleration, Color couleur) {
         this.position     = centre;
-        this.rayon        = rayon;
+        setRayon(rayon);
         this.vitesse      = vitesse;
         this.acceleration = acceleration;
         this.couleur      = couleur;
@@ -135,5 +135,12 @@ public class BilleNue implements Bille {
         return "\n{\n\tclef = " + clef + "\n\tcentre = " + position + " \n\trayon = "+rayon +  " \n\tvitesse = " + vitesse + " \n\tacceleration = " + acceleration + " \n\tcouleur = " + couleur + "\n}\n";
     }
 
+    @Override
+    public void setRayon(double rayon) {
+        if(rayon < 0) {
+            throw new IllegalArgumentException("Rayon < 0");
+        }
+        this.rayon = rayon;
+    }
 }
 

@@ -20,4 +20,6 @@ public interface Bille {
     void deplacer(double deltaT);
     boolean gestionCollisionBilleBille(Vector<Bille> billes);
     String toString();
+
+    void setRayon(double rayon);
 }

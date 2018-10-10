@@ -43,6 +43,10 @@ public abstract class DecorateurBille implements Bille {
         return billeDecoree.masse();
     }
 
+    @Override
+    public void setRayon(double rayon) {
+        billeDecoree.setRayon(rayon);
+    }
 
     @Override
     public void collisionContour(double abscisseCoinHautGauche, double ordonnéeCoinHautGauche, double largeur, double hauteur) {
