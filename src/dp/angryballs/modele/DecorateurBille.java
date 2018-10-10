@@ -64,8 +64,8 @@ public abstract class DecorateurBille implements Bille {
     }
 
     @Override
-    public void gestionCollisionBille(Vector<Forme> billes) {
-        billeDecoree.gestionCollisionBille(billes);
+    public void gestionCollision(Vector<Forme> billes) {
+        billeDecoree.gestionCollision(billes);
     }
 
     @Override

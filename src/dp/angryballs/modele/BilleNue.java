@@ -99,7 +99,7 @@ public class BilleNue implements Bille {
      * si renvoie false, il n'y a pas de collision et les billes sont laissées intactes
      * */
     @Override
-    public void gestionCollisionBille(Vector<Forme> formes) {
+    public void gestionCollision(Vector<Forme> formes) {
         CollisionBille collisionBille = new CollisionBille(this);
         collisionBille.tester(formes);
     }

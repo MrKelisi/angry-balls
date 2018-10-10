@@ -4,7 +4,6 @@ import java.util.Vector;
 
 import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.Forme;
-import dp.angryballs.modele.VisiteurForme;
 import dp.angryballs.vues.VueBillard;
 
 /**
@@ -13,7 +12,7 @@ import dp.angryballs.vues.VueBillard;
  * 
  * ICI : IL N'Y A RIEN A CHANGER
  * */
-public class AnimationBilles implements Runnable, VisiteurForme {
+public class AnimationBilles implements Runnable {
     Vector<Forme> formes;   // la liste de toutes les billes en mouvement
     VueBillard vueBillard;    // la vue responsable du dessin des billes
     private Thread thread;    // pour lancer et arrêter les billes
@@ -40,7 +39,10 @@ public class AnimationBilles implements Runnable, VisiteurForme {
         try {
             while (!Thread.interrupted()) {                         // gestion du mouvement
                 for(Forme forme : formes) {
-                    forme.visite(this);
+                    forme.deplacer(deltaT);                 // mise à jour position et vitesse de cette bille
+                    forme.gestionAcceleration(formes);      // calcul de l'accélération subie par cette bille
+                    forme.gestionCollision(formes);
+                    forme.collisionContour( 0, 0, vueBillard.largeurBillard(), vueBillard.hauteurBillard());
                 }
 
                 vueBillard.miseAJour();                                // on prévient la vue qu'il faut redessiner les billes
@@ -104,14 +106,5 @@ public class AnimationBilles implements Runnable, VisiteurForme {
             this.thread.interrupt();
             this.thread = null;
         }
-    }
-
-    @Override
-    public void visite(Bille bille) {
-        bille.deplacer(deltaT);                 // mise à jour position et vitesse de cette bille
-        bille.gestionAcceleration(formes);      // calcul de l'accélération subie par cette bille
-        bille.gestionCollisionBille(formes);
-        bille.collisionContour( 0, 0, vueBillard.largeurBillard(), vueBillard.hauteurBillard());
-
     }
 }
