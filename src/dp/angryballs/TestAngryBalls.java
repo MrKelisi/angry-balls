@@ -69,11 +69,7 @@ public class TestAngryBalls {
         billes.add(new BilleMvtNewtonArret(p4, rayon, v4,  Color.black));
         */
 
-        billes.add(new Rebond(new RectiligneUniforme(new BilleNue(p0, rayon, v0, Color.red))));
-        billes.add(new Rebond(new Frottements(new Pesanteur(new BilleNue(p1, rayon, v1, Color.yellow), new Vecteur(0,0.001)))));
-        billes.add(new Rebond(new Frottements(new Newton(new BilleNue(p2, rayon, v2, Color.green)))));
-        billes.add(new PasseMurailles(new RectiligneUniforme(new BilleNue(p3, rayon, v3, Color.cyan))));
-        billes.add(new Arret(new Newton(new BilleNue(p4, rayon, v4,  Color.black))));
+        billes.add(new Rebond(new RectiligneUniforme(new BilleNue(p0, rayon * 3, new Vecteur(0,0), Color.red))));
 
 
         //---------------------- ici finit la partie à changer -------------------------------------------------------------
@@ -90,11 +86,13 @@ public class TestAngryBalls {
 
         EcouteurBoutonLancer écouteurBoutonLancer = new EcouteurBoutonLancer(animationBilles);
         EcouteurBoutonArreter écouteurBoutonArrêter = new EcouteurBoutonArreter(animationBilles);
+        EcouteurCreationBille ecouteurCreationBille = new EcouteurCreationBille(animationBilles, cadre.droite.getSelectedDecorators(), rayon);
 
         //------------------------- activation des écouteurs des boutons et ça tourne tout seul ------------------------------
 
 
-        cadre.lancerBilles.addActionListener(écouteurBoutonLancer);             // maladroit : à changer
-        cadre.arrêterBilles.addActionListener(écouteurBoutonArrêter);           // maladroit : à changer
+        cadre.lancerBilles.addActionListener(écouteurBoutonLancer);             //TODO maladroit : à changer
+        cadre.arrêterBilles.addActionListener(écouteurBoutonArrêter);           //TODO maladroit : à changer
+        cadre.droite.getCreateButton().addActionListener(ecouteurCreationBille);
     }
 }

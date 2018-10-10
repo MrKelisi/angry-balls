@@ -18,10 +18,11 @@ import outilsvues.Outils;
  * 
  * */
 public class CadreAngryBalls extends Frame implements VueBillard {
-    TextField présentation;
+    TextField presentation;
     Billard billard;
-    public Button lancerBilles, arrêterBilles;
-    Panel haut, centre, bas;
+    public Button lancerBilles, arrêterBilles; //TODO "AAAAAHHHHH"
+    Panel bas;
+    public PanneauAjoutBilles droite;
 
     EcouteurTerminaison ecouteurTerminaison;
 
@@ -30,23 +31,23 @@ public class CadreAngryBalls extends Frame implements VueBillard {
         Outils.place(this, 0.33, 0.33, 0.5, 0.5);
         this.ecouteurTerminaison = new EcouteurTerminaison(this);
 
-        this.haut = new Panel(); this.haut.setBackground(Color.LIGHT_GRAY);
-        this.add(this.haut,BorderLayout.NORTH);
-
-        this.centre = new Panel();
-        this.add(this.centre,BorderLayout.CENTER);
-
-        this.bas = new Panel(); this.bas.setBackground(Color.LIGHT_GRAY);
+        this.bas = new Panel();
+        this.bas.setBackground(Color.LIGHT_GRAY);
         this.add(this.bas,BorderLayout.SOUTH);
 
-        this.présentation = new TextField(message, 100); this.présentation.setEditable(false);
-        this.haut.add(this.présentation);
+        droite = new PanneauAjoutBilles();
+        droite.setPreferredSize(new Dimension(300, getHeight()));
+        this.add(this.droite, BorderLayout.EAST);
+
 
         this.billard = new Billard(billes);
         this.add(this.billard);
 
-        this.lancerBilles = new Button("lancer les billes"); this.bas.add(this.lancerBilles);
-        this.arrêterBilles = new Button("arrêter les billes"); this.bas.add(this.arrêterBilles);
+        this.lancerBilles = new Button("lancer les billes");
+        this.bas.add(this.lancerBilles);
+
+        this.arrêterBilles = new Button("arrêter les billes");
+        this.bas.add(this.arrêterBilles);
     }
 
     public double largeurBillard() {

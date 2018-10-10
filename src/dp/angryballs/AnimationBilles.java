@@ -28,6 +28,10 @@ public class AnimationBilles  implements Runnable {
         this.thread = null;     //est-ce utile ?
     }
 
+    public void ajouterBille(Bille bille) {
+        billes.add(bille);
+    }
+
     @Override
     public void run() {
         try {
