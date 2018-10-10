@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.Vector;
 
-import dp.angryballs.modele.BilleMvtRUPasseMurailles;
+import dp.angryballs.modele.BilleNue;
+import dp.angryballs.modele.comportements.PasseMurailles;
+import dp.angryballs.modele.comportements.RectiligneUniforme;
 import mesmaths.geometrie.base.Vecteur;
 import dp.angryballs.modele.Bille;
 import dp.angryballs.vues.VueBillard;
@@ -14,19 +16,22 @@ public class TestAnimationBilles {
      * @param args
      * @throws IOException
      */
+
     public static void main(String[] args) throws IOException {
         Vector<Bille> billes = new Vector<Bille>();
 
         Vecteur centreBille1 = new Vecteur(110,70);
         double rayonBille1 = 12;
         Vecteur vitesseBille1 = new Vecteur (10,-30);
-        Bille bille1 = new BilleMvtRUPasseMurailles(centreBille1, rayonBille1, vitesseBille1, Color.blue);
+        // Bille bille1 = new BilleMvtRUPasseMurailles(centreBille1, rayonBille1, vitesseBille1, Color.blue);
+        Bille bille1 = new PasseMurailles(new RectiligneUniforme(new BilleNue(centreBille1, rayonBille1, vitesseBille1, Color.blue)));
         billes.add(bille1);
 
         Vecteur centreBille2 = new Vecteur(20,50);
         double rayonBille2 = 15;
         Vecteur vitesseBille2 = new Vecteur (5,-5);
-        Bille bille2 = new BilleMvtRUPasseMurailles(centreBille2, rayonBille2, vitesseBille2, Color.blue);
+        // Bille bille2 = new BilleMvtRUPasseMurailles(centreBille2, rayonBille2, vitesseBille2, Color.blue);
+        Bille bille2 = new PasseMurailles(new RectiligneUniforme(new BilleNue(centreBille2, rayonBille2, vitesseBille2, Color.blue)));
         billes.add(bille2);
 
 

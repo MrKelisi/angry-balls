@@ -3,15 +3,12 @@ package dp.angryballs;
 import java.awt.Color;
 import java.util.Vector;
 
+import dp.angryballs.modele.BilleNue;
+import dp.angryballs.modele.comportements.*;
 import dp.angryballs.vues.CadreAngryBalls;
 import mesmaths.geometrie.base.Vecteur;
 
 import dp.angryballs.modele.Bille;
-import dp.angryballs.modele.BilleMvtNewtonArret;
-import dp.angryballs.modele.BilleMvtNewtonFrottementRebond;
-import dp.angryballs.modele.BilleMvtRUPasseMurailles;
-import dp.angryballs.modele.BilleMvtRURebond;
-import dp.angryballs.modele.BilleMvtPesanteurFrottementRebond;
 
 /**
  * Gestion d'une liste de billes en mouvement ayant toutes un comportement différent
@@ -64,11 +61,20 @@ public class TestAngryBalls {
 
         //--------------- ici commence la partie à changer ---------------------------------
 
+        /*
         billes.add(new BilleMvtRURebond(p0, rayon, v0, Color.red));
         billes.add(new BilleMvtPesanteurFrottementRebond(p1, rayon, v1, new Vecteur(0,0.001), Color.yellow));
         billes.add(new BilleMvtNewtonFrottementRebond(p2, rayon, v2, Color.green));
         billes.add(new BilleMvtRUPasseMurailles(p3, rayon, v3, Color.cyan));
         billes.add(new BilleMvtNewtonArret(p4, rayon, v4,  Color.black));
+        */
+
+        billes.add(new Rebond(new RectiligneUniforme(new BilleNue(p0, rayon, v0, Color.red))));
+        billes.add(new Rebond(new Frottements(new Pesanteur(new BilleNue(p1, rayon, v1, Color.yellow), new Vecteur(0,0.001)))));
+        billes.add(new Rebond(new Frottements(new Newton(new BilleNue(p2, rayon, v2, Color.green)))));
+        billes.add(new PasseMurailles(new RectiligneUniforme(new BilleNue(p3, rayon, v3, Color.cyan))));
+        billes.add(new Arret(new Newton(new BilleNue(p4, rayon, v4,  Color.black))));
+
 
         //---------------------- ici finit la partie à changer -------------------------------------------------------------
 

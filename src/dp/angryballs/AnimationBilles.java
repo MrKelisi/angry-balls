@@ -46,7 +46,7 @@ public class AnimationBilles  implements Runnable {
 
                     billeCourante = billes.get(i);
                     billeCourante.deplacer(deltaT);                 // mise à jour position et vitesse de cette bille
-                    billeCourante.gestionAccélération(billes);      // calcul de l'accélération subie par cette bille
+                    billeCourante.gestionAcceleration(billes);      // calcul de l'accélération subie par cette bille
                     billeCourante.gestionCollisionBilleBille(billes);
                     billeCourante.collisionContour( 0, 0, vueBillard.largeurBillard(), vueBillard.hauteurBillard());        //System.err.println("billes = " + billes);
                 }
@@ -74,7 +74,7 @@ public class AnimationBilles  implements Runnable {
         double vitesse2Courante;
 
         for (i = 0; i < billes.size(); ++i) {
-            if ((vitesse2Courante = billes.get(i).vitesse.normeCarrée()) > vitesse2Max) {
+            if ((vitesse2Courante = billes.get(i).getVitesse().normeCarrée()) > vitesse2Max) {
                 vitesse2Max = vitesse2Courante;
             }
         }
@@ -93,7 +93,7 @@ public class AnimationBilles  implements Runnable {
 
         int i;
         for (i = 0; i < billes.size(); i++) {
-            if ((rayonCourant = billes.get(i).rayon) < rayonMin) {
+            if ((rayonCourant = billes.get(i).getRayon()) < rayonMin) {
                 rayonMin = rayonCourant;
             }
         }
