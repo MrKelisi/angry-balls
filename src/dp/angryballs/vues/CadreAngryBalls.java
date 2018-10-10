@@ -1,6 +1,7 @@
 package dp.angryballs.vues;
 
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 import java.util.Vector;
 
 import dp.angryballs.modele.Bille;
@@ -41,6 +42,8 @@ public class CadreAngryBalls extends Frame implements VueBillard {
 
 
         this.billard = new Billard(billes);
+        this.billard.setIgnoreRepaint(true);
+
         this.add(this.billard);
 
         this.lancerBilles = new Button("lancer les billes");
@@ -60,7 +63,12 @@ public class CadreAngryBalls extends Frame implements VueBillard {
 
     @Override
     public void miseAJour() {
-        this.billard.repaint();
+        this.billard.createBufferStrategy(2);
+        BufferStrategy bufferStrategy = billard.getBufferStrategy();
+        Graphics g = bufferStrategy.getDrawGraphics();
+        billard.paint(g);
+        bufferStrategy.show();
+        g.dispose();
     }
 
     /* (non-Javadoc)

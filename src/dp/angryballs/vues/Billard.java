@@ -1,11 +1,9 @@
 package dp.angryballs.vues;
 
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.Vector;
 
 import dp.angryballs.modele.Bille;
-
-import javax.swing.*;
 
 
 /**
@@ -15,12 +13,11 @@ import javax.swing.*;
  *  
  * 
  * */
-public class Billard extends JPanel {
+public class Billard extends Canvas {
     Vector<Bille> billes;
 
     public Billard(Vector<Bille> billes) {
         this.billes = billes;
-        setDoubleBuffered(true);
     }
 
     /* (non-Javadoc)
@@ -34,7 +31,5 @@ public class Billard extends JPanel {
         for (i = 0; i < this.billes.size(); ++i) {
             this.billes.get(i).dessine(graphics);
         }
-
-        //System.out.println("billes dans le billard = " + billes);
     }
 }
