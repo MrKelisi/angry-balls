@@ -10,6 +10,10 @@ public class Pesanteur extends DecorateurBille {
 
     private Vecteur pesanteur;
 
+    public Pesanteur(Bille billeDecoree) {
+        this(billeDecoree, new Vecteur(0, 0.001));
+    }
+
     public Pesanteur(Bille billeDecoree, Vecteur pesanteur) {
         super(billeDecoree);
         this.pesanteur = pesanteur;
