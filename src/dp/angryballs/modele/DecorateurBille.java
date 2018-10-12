@@ -79,6 +79,11 @@ public abstract class DecorateurBille implements Bille {
     }
 
     @Override
+    public void setVitesse(Vecteur vitesse) {
+        billeDecoree.setVitesse(vitesse);
+    }
+
+    @Override
     public void visite(VisiteurForme v) {
         billeDecoree.visite(v);
     }

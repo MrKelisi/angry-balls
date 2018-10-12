@@ -20,7 +20,6 @@ public class BilleNue implements Bille {
     private int clef;
     private static int prochaineClef = 0;
 
-
     protected BilleNue(Vecteur centre, double rayon, Vecteur vitesse, Vecteur acceleration, Color couleur) {
         this.position     = centre;
         this.vitesse      = vitesse;
@@ -142,6 +141,11 @@ public class BilleNue implements Bille {
     @Override
     public Color getColor() {
         return couleur;
+    }
+
+    @Override
+    public void setVitesse(Vecteur vitesse) {
+        this.vitesse = vitesse;
     }
 }
 

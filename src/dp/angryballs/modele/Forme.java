@@ -10,6 +10,7 @@ public interface Forme {
     Vecteur getPosition();
     Vecteur getVitesse();
     Vecteur getAcceleration();
+    void setVitesse(Vecteur vitesse);
     double masse();
     void deplacer(double deltaT);
     Color getColor();
