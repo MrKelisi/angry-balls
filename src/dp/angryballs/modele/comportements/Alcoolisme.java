@@ -6,11 +6,11 @@ import mesmaths.geometrie.base.Vecteur;
 
 import java.util.Random;
 
-public class Colson extends DecorateurBille {
+public class Alcoolisme extends DecorateurBille {
     private double tempsAvantPause;
     private double tempsPause;
 
-    public Colson(Bille billeDecoree) {
+    public Alcoolisme(Bille billeDecoree) {
         super(billeDecoree);
     }
 
