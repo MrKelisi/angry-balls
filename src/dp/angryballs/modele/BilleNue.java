@@ -147,5 +147,24 @@ public class BilleNue implements Bille {
     public void setVitesse(Vecteur vitesse) {
         this.vitesse = vitesse;
     }
+
+    @Override
+    public void prendre(ObservableMouvement observableMouvement) {
+
+    }
+
+    @Override
+    public void relacher() {
+
+    }
+
+    @Override
+    public void setPosition(Vecteur position) {
+        if(position == null) {
+            throw new NullPointerException("Position null");
+        }
+
+        this.position = position;
+    }
 }
 

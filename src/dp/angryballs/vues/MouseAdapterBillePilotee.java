@@ -2,22 +2,28 @@ package dp.angryballs.vues;
 
 import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.Forme;
+import dp.angryballs.modele.ObservableMouvement;
+import dp.angryballs.modele.ObserveurMouvement;
 import mesmaths.geometrie.base.Vecteur;
 
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Vector;
 
-public class MouseAdapterBillePilotee extends MouseAdapter {
+public class MouseAdapterBillePilotee extends MouseAdapter implements ObservableMouvement{
     private Vector<Forme> formes;
     private Forme formeAccrochee;
-    private Vecteur source;
+    private Point source;
     private long momentLancer;
+    private ArrayList<ObserveurMouvement> observeurs;
 
     public MouseAdapterBillePilotee(Vector<Forme> formes) {
         this.formes = formes;
         this.formeAccrochee = null;
+        observeurs = new ArrayList<>();
+        source = new Point(0,0);
     }
 
     @Override
@@ -30,12 +36,9 @@ public class MouseAdapterBillePilotee extends MouseAdapter {
                     f.getPosition().y - rayon < e.getPoint().y &&
                     f.getPosition().y + rayon > e.getPoint().y) {
 
-                formeAccrochee = f;
-                source = formeAccrochee.getPosition().copie();
-                momentLancer = System.currentTimeMillis();
+                f.prendre(this);
 
-                formeAccrochee.getAcceleration().set(Vecteur.VECTEURNUL);
-                formeAccrochee.getVitesse().set(Vecteur.VECTEURNUL);
+                formeAccrochee = f;
                 break;
             }
         }
@@ -45,23 +48,36 @@ public class MouseAdapterBillePilotee extends MouseAdapter {
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
 
+
         if(formeAccrochee == null) {
             return;
         }
 
-        float tempsLancer = System.currentTimeMillis() - momentLancer;
-        Vecteur vitesse = formeAccrochee.getPosition().difference(source).produit(1.0 / tempsLancer);
-        formeAccrochee.setVitesse(vitesse);
-
-        formeAccrochee = null;
+        formeAccrochee.relacher();
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
         super.mouseDragged(e);
+
         if(formeAccrochee != null) {
-            formeAccrochee.getPosition().set(new Vecteur(e.getX(), e.getY()));
+            Vecteur mouvement = new Vecteur(e.getX() - source.getX(), e.getY() - source.getY());
+
+            for(ObserveurMouvement observeur : observeurs) {
+                observeur.onMove(mouvement);
+            }
         }
+
+        source = e.getPoint();
     }
 
+    @Override
+    public void ajoutObserveur(ObserveurMouvement observeur) {
+        observeurs.add(observeur);
+    }
+
+    @Override
+    public void supprimerObserveur(ObserveurMouvement observeur) {
+        observeurs.remove(observeur);
+    }
 }

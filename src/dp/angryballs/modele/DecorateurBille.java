@@ -87,4 +87,19 @@ public abstract class DecorateurBille implements Bille {
     public void visite(VisiteurForme v) {
         billeDecoree.visite(v);
     }
+
+    @Override
+    public void prendre(ObservableMouvement observableMouvement) {
+        billeDecoree.prendre(observableMouvement);
+    }
+
+    @Override
+    public void relacher() {
+        billeDecoree.relacher();
+    }
+
+    @Override
+    public void setPosition(Vecteur position) {
+        billeDecoree.setPosition(position);
+    }
 }

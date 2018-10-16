@@ -32,7 +32,9 @@ public class PanneauAjoutBilles extends Panel {
         }
 
         add(labelAjoutBilles);
-        for(BoutonComportement bc : listDecorators) add(bc.getCheckbox());
+        for(BoutonComportement bc : listDecorators) {
+            add(bc.getCheckbox());
+        }
         add(createButton);
     }
 

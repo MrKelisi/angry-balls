@@ -18,4 +18,12 @@ public interface Forme {
     void collisionContour(double abscisseCoinHautGauche, double ordonnéeCoinHautGauche, double largeur, double hauteur);
     void gestionAcceleration(Vector<Forme> billes);
     void gestionCollision(Vector<Forme> billes);
+    void prendre(ObservableMouvement observableMouvement);
+    void relacher();
+
+    /**
+     * Change la postition de la forme
+     * @param position Position
+     */
+    void setPosition(Vecteur position);
 }

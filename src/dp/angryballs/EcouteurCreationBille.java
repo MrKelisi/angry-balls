@@ -36,8 +36,9 @@ public class EcouteurCreationBille implements ActionListener {
 
         for(BoutonComportement bc : listeDecorateurs) {
             try {
-                if(bc.getCheckbox().isSelected())
+                if(bc.getCheckbox().isSelected()) {
                     bille = bc.getDecorateur().getConstructor(Bille.class).newInstance(bille);
+                }
             }
             catch (Exception e) {
                 System.err.println(e.getMessage());
