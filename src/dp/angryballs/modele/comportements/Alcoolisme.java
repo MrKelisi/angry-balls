@@ -2,45 +2,37 @@ package dp.angryballs.modele.comportements;
 
 import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.DecorateurBille;
+import dp.angryballs.modele.Forme;
 import mesmaths.geometrie.base.Vecteur;
 
+import java.util.List;
 import java.util.Random;
 
 public class Alcoolisme extends DecorateurBille {
-    private double tempsAvantPause;
-    private double tempsPause;
+    private double tempsTremblement;
 
     public Alcoolisme(Bille billeDecoree) {
         super(billeDecoree);
+        tempsTremblement = 0;
     }
 
     @Override
     public void deplacer(double deltaT) {
-        Random r = new Random();
-        Vecteur tremblement;
-
-        if(tempsAvantPause > 0) {
-            super.deplacer(deltaT);
-            tremblement = new Vecteur(r.nextDouble() * 4 - 2, r.nextDouble() * 4 - 2);
-            tempsAvantPause -= deltaT;
-        }
-        else if(tempsPause > 0) { //Bon, on va faire la pause
-            tempsPause -= deltaT;
-            tremblement = new Vecteur(0,0);
-        }
-        else {
-            tempsAvantPause = r.nextDouble() * 30000 + 30000;
-            tempsPause = r.nextDouble() * 10000 + 5000;
-            tremblement = new Vecteur(r.nextDouble() * 2 - 1, r.nextDouble() * 2 - 1);
-        }
-
-        getPosition().ajoute(tremblement);
+        super.deplacer(deltaT);
+        tempsTremblement -= deltaT;
     }
 
     @Override
-    public Vecteur getVitesse() {
-        return super.getVitesse().produit(0.1);
+    public void gestionAcceleration(List<Forme> billes) {
+        if(tempsTremblement <= 0) {
+            super.gestionAcceleration(billes);
+            Vecteur vitesse = getVitesse();
+            double angle = Math.random() * 1.6 - 0.8;
+            double cos = Math.cos(angle);
+            double sin = Math.sin(angle);
+
+            setVitesse(new Vecteur(vitesse.x * cos - vitesse.y * sin, vitesse.x * sin + vitesse.y * cos));
+            tempsTremblement = Math.random() * 250;
+        }
     }
-
-
 }
