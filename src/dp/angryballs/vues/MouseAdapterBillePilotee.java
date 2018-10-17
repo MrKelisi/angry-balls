@@ -23,7 +23,7 @@ public class MouseAdapterBillePilotee extends MouseAdapter implements Observable
         this.formes = formes;
         this.formeAccrochee = null;
         observeurs = new ArrayList<>();
-        source = new Point(0,0);
+        source = null;
     }
 
     @Override
@@ -54,13 +54,14 @@ public class MouseAdapterBillePilotee extends MouseAdapter implements Observable
         }
 
         formeAccrochee.relacher();
+        source = null;
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
         super.mouseDragged(e);
 
-        if(formeAccrochee != null) {
+        if(formeAccrochee != null && source != null) {
             Vecteur mouvement = new Vecteur(e.getX() - source.getX(), e.getY() - source.getY());
 
             for(ObserveurMouvement observeur : observeurs) {
