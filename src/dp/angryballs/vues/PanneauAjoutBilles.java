@@ -12,9 +12,9 @@ import java.util.Collection;
 
 public class PanneauAjoutBilles extends Panel {
     private Label labelAjoutBilles;
-    private ArrayList<BoutonComportement> listDecorators = new ArrayList<>();
-    private JColorChooser colorChooser = new JColorChooser(Color.BLACK);
-    private JSlider sliderRayon = new JSlider(15,100,30);
+    private ArrayList<BoutonComportement> listDecorators;
+    private JSlider sliderRayon;
+    private JColorChooser colorChooser;
     private Button createButton;
 
     public PanneauAjoutBilles() {
@@ -23,11 +23,10 @@ public class PanneauAjoutBilles extends Panel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         labelAjoutBilles = new Label("Création de billes");
+        listDecorators = new ArrayList<>();
+        sliderRayon = new JSlider(15,100,30);
+        colorChooser = new JColorChooser(Color.BLACK);
         createButton = new Button("Créer");
-
-        AbstractColorChooserPanel panels[] = { };
-        //colorChooser.setChooserPanels(panels);
-        colorChooser.setPreviewPanel(new JPanel());
 
         try {
             Collection<Class<? extends DecorateurBille>> classes = Outils.getClasses("dp.angryballs.modele.comportements", DecorateurBille.class);
@@ -39,10 +38,27 @@ public class PanneauAjoutBilles extends Panel {
             e.printStackTrace();
         }
 
-        add(labelAjoutBilles);
-        for(BoutonComportement bc : listDecorators) {
-            add(bc.getCheckbox());
+        AbstractColorChooserPanel[] panels = colorChooser.getChooserPanels();
+        for(AbstractColorChooserPanel p : panels) {
+            switch (p.getDisplayName()) {
+                case "TSV":
+                    colorChooser.removeChooserPanel(p);
+                    break;
+                case "TSL":
+                    colorChooser.removeChooserPanel(p);
+                    break;
+                case "RVB":
+                    colorChooser.removeChooserPanel(p);
+                    break;
+                case "CMYK":
+                    colorChooser.removeChooserPanel(p);
+                    break;
+            }
         }
+        colorChooser.setPreviewPanel(new JPanel());
+
+        add(labelAjoutBilles);
+        for(BoutonComportement bc : listDecorators) add(bc.getCheckbox());
         add(sliderRayon);
         add(colorChooser);
         add(createButton);
