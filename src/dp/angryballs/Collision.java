@@ -3,7 +3,7 @@ package dp.angryballs;
 import dp.angryballs.modele.Forme;
 import dp.angryballs.modele.VisiteurForme;
 
-import java.util.Vector;
+import java.util.List;
 
 public abstract class Collision implements VisiteurForme {
     protected Forme forme;
@@ -16,7 +16,7 @@ public abstract class Collision implements VisiteurForme {
         this.forme = forme;
     }
 
-    public void tester(Vector<Forme> formes) {
+    public void tester(List<Forme> formes) {
         for(Forme forme : formes) {
             if(this.forme.getClef() == forme.getClef()) {
                 continue;

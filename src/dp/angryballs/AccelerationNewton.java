@@ -1,12 +1,10 @@
 package dp.angryballs;
 
-import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.Forme;
 import mesmaths.geometrie.base.Vecteur;
 import mesmaths.mecanique.MecaniquePoint;
 
-import java.util.ArrayList;
-import java.util.Vector;
+import java.util.List;
 
 public class AccelerationNewton extends Acceleration {
     public AccelerationNewton(Forme forme) {
@@ -14,8 +12,7 @@ public class AccelerationNewton extends Acceleration {
     }
 
     @Override
-    public Vecteur tester(Vector<Forme> formes) {
-        formes = (Vector<Forme>) formes.clone();
+    public Vecteur tester(List<Forme> formes) {
         int d = formes.size() - 1;
 
         double masses[] = new double[d];   // les masses des autres billes

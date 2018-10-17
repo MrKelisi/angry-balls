@@ -1,7 +1,7 @@
 package dp.angryballs.modele;
 
 import java.awt.*;
-import java.util.Vector;
+import java.util.List;
 
 import dp.angryballs.CollisionBille;
 import mesmaths.cinematique.Cinematique;
@@ -93,7 +93,7 @@ public class BilleNue implements Bille {
      * A ce niveau le vecteur acceleration est mis à zéro (c'est à dire pas d'acceleration)
      * */
     @Override
-    public void gestionAcceleration(Vector<Forme> billes) {
+    public void gestionAcceleration(List<Forme> billes) {
         this.getAcceleration().set(Vecteur.VECTEURNUL);
     }
 
@@ -107,7 +107,7 @@ public class BilleNue implements Bille {
      * si renvoie false, il n'y a pas de collision et les billes sont laissées intactes
      * */
     @Override
-    public void gestionCollision(Vector<Forme> formes) {
+    public void gestionCollision(List<Forme> formes) {
         CollisionBille collisionBille = new CollisionBille(this);
         collisionBille.tester(formes);
     }

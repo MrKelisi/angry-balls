@@ -3,7 +3,7 @@ package dp.angryballs.modele;
 import mesmaths.geometrie.base.Vecteur;
 
 import java.awt.*;
-import java.util.Vector;
+import java.util.List;
 
 public interface Forme {
     int getClef();
@@ -16,8 +16,8 @@ public interface Forme {
     Color getColor();
     void visite(VisiteurForme v);
     void collisionContour(double abscisseCoinHautGauche, double ordonnéeCoinHautGauche, double largeur, double hauteur);
-    void gestionAcceleration(Vector<Forme> billes);
-    void gestionCollision(Vector<Forme> billes);
+    void gestionAcceleration(List<Forme> billes);
+    void gestionCollision(List<Forme> billes);
     void prendre(ObservableMouvement observableMouvement);
     void relacher();
 

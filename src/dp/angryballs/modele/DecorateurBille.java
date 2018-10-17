@@ -3,7 +3,7 @@ package dp.angryballs.modele;
 import mesmaths.geometrie.base.Vecteur;
 
 import java.awt.*;
-import java.util.Vector;
+import java.util.List;
 
 public abstract class DecorateurBille implements Bille {
 
@@ -54,7 +54,7 @@ public abstract class DecorateurBille implements Bille {
     }
 
     @Override
-    public void gestionAcceleration(Vector<Forme> billes) {
+    public void gestionAcceleration(List<Forme> billes) {
         billeDecoree.gestionAcceleration(billes);
     }
 
@@ -64,7 +64,7 @@ public abstract class DecorateurBille implements Bille {
     }
 
     @Override
-    public void gestionCollision(Vector<Forme> billes) {
+    public void gestionCollision(List<Forme> billes) {
         billeDecoree.gestionCollision(billes);
     }
 

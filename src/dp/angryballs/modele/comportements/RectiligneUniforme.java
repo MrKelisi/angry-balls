@@ -5,7 +5,7 @@ import dp.angryballs.modele.DecorateurBille;
 import dp.angryballs.modele.Forme;
 import mesmaths.geometrie.base.Vecteur;
 
-import java.util.Vector;
+import java.util.List;
 
 public class RectiligneUniforme extends DecorateurBille {
 
@@ -14,7 +14,7 @@ public class RectiligneUniforme extends DecorateurBille {
     }
 
     @Override
-    public void gestionAcceleration(Vector<Forme> formes) {
+    public void gestionAcceleration(List<Forme> formes) {
         getAcceleration().set(Vecteur.VECTEURNUL);
     }
 }

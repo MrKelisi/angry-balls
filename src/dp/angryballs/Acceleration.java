@@ -4,7 +4,7 @@ import dp.angryballs.modele.Forme;
 import dp.angryballs.modele.VisiteurForme;
 import mesmaths.geometrie.base.Vecteur;
 
-import java.util.Vector;
+import java.util.List;
 
 public abstract class Acceleration {
     protected Forme forme;
@@ -17,5 +17,5 @@ public abstract class Acceleration {
         this.forme = forme;
     }
 
-    public abstract Vecteur tester(Vector<Forme> formes);
+    public abstract Vecteur tester(List<Forme> formes);
 }

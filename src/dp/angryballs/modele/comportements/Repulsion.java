@@ -7,7 +7,7 @@ import dp.angryballs.modele.DecorateurBille;
 import dp.angryballs.modele.Forme;
 import dp.angryballs.modele.OutilsBille;
 
-import java.util.Vector;
+import java.util.List;
 
 public class Repulsion extends DecorateurBille {
 
@@ -16,7 +16,7 @@ public class Repulsion extends DecorateurBille {
     }
 
     @Override
-    public void gestionAcceleration(Vector<Forme> formes) {
+    public void gestionAcceleration(List<Forme> formes) {
         Acceleration acceleration = new AccelerationNewton(billeDecoree);
         billeDecoree.gestionAcceleration(formes);
         getAcceleration().ajoute(acceleration.tester(formes).opposé().produit(0.1));

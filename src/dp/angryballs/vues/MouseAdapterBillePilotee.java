@@ -10,16 +10,16 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Vector;
+import java.util.List;
 
 public class MouseAdapterBillePilotee extends MouseAdapter implements ObservableMouvement{
-    private Vector<Forme> formes;
+    private List<Forme> formes;
     private Forme formeAccrochee;
     private Point source;
     private long momentLancer;
     private ArrayList<ObserveurMouvement> observeurs;
 
-    public MouseAdapterBillePilotee(Vector<Forme> formes) {
+    public MouseAdapterBillePilotee(List<Forme> formes) {
         this.formes = formes;
         this.formeAccrochee = null;
         observeurs = new ArrayList<>();

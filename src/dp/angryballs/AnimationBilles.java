@@ -1,6 +1,6 @@
 package dp.angryballs;
 
-import java.util.Vector;
+import java.util.List;
 
 import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.Forme;
@@ -13,7 +13,7 @@ import dp.angryballs.vues.VueBillard;
  * ICI : IL N'Y A RIEN A CHANGER
  * */
 public class AnimationBilles implements Runnable {
-    Vector<Forme> formes;   // la liste de toutes les billes en mouvement
+    List<Forme> formes;   // la liste de toutes les billes en mouvement
     VueBillard vueBillard;    // la vue responsable du dessin des billes
     private Thread thread;    // pour lancer et arrêter les billes
     private double deltaT;
@@ -24,7 +24,7 @@ public class AnimationBilles implements Runnable {
      * @param formes
      * @param vueBillard
      */
-    public AnimationBilles(Vector<Forme> formes, VueBillard vueBillard) {
+    public AnimationBilles(List<Forme> formes, VueBillard vueBillard) {
         this.formes = formes;
         this.vueBillard = vueBillard;
         deltaT = 10;
@@ -58,7 +58,7 @@ public class AnimationBilles implements Runnable {
      * calcule le maximum de de la norme carrée (pour faire moins de calcul) des vecteurs vitesse de la liste de billes
      *
      * */
-    static double maxVitessesCarrées(Vector<Bille> billes)
+    static double maxVitessesCarrées(List<Bille> billes)
     {
         double vitesse2Max = 0;
 
@@ -79,7 +79,7 @@ public class AnimationBilles implements Runnable {
      *
      *
      * */
-    static double minRayons(Vector<Bille> billes) {
+    static double minRayons(List<Bille> billes) {
         double rayonMin, rayonCourant;
         rayonMin = Double.MAX_VALUE;
 
