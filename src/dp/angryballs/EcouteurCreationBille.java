@@ -3,6 +3,7 @@ package dp.angryballs;
 import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.BilleNue;
 import dp.angryballs.vues.BoutonComportement;
+import dp.angryballs.vues.PanneauAjoutBilles;
 import mesmaths.geometrie.base.Vecteur;
 
 import java.awt.*;
@@ -12,19 +13,19 @@ import java.util.ArrayList;
 
 public class EcouteurCreationBille implements ActionListener {
     private AnimationBilles animationBilles;
-    private ArrayList<BoutonComportement> listeDecorateurs;
+    private PanneauAjoutBilles panel;
     private double rayon;
 
-    public EcouteurCreationBille(AnimationBilles animationBilles, ArrayList<BoutonComportement> listeDecorateurs, double rayon) {
+    public EcouteurCreationBille(AnimationBilles animationBilles, PanneauAjoutBilles panel, double rayon) {
         if(animationBilles == null) {
             throw new NullPointerException("animationBilles null");
         }
-        if(listeDecorateurs == null) {
+        if(panel == null || panel.getDecorators() == null) {
             throw new NullPointerException("listeDecorateurs null");
         }
 
         this.animationBilles = animationBilles;
-        this.listeDecorateurs = listeDecorateurs;
+        this.panel = panel;
         this.rayon = rayon;
     }
 
@@ -32,9 +33,9 @@ public class EcouteurCreationBille implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         Vecteur p = Vecteur.créationAléatoire(0, 0, 100, 100); //TODO changer les valeurs
         Vecteur v = Vecteur.créationAléatoire(-0.1, -0.1, 0.1, 0.1); //TODO changer les valeurs
-        Bille bille = new BilleNue(p, rayon, v, Color.BLACK); //TODO: changer les valeurs
+        Bille bille = new BilleNue(p, panel.getRayon(), v, panel.getColor()); //TODO: changer les valeurs
 
-        for(BoutonComportement bc : listeDecorateurs) {
+        for(BoutonComportement bc : panel.getDecorators()) {
             try {
                 if(bc.getCheckbox().isSelected()) {
                     bille = bc.getDecorateur().getConstructor(Bille.class).newInstance(bille);
