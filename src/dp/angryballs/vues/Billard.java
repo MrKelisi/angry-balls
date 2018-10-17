@@ -32,6 +32,7 @@ public class Billard extends Canvas implements VisiteurForme {
         graphics.clearRect(0,0, getWidth(), getHeight());
         int i;
 
+
         for(Forme forme : formes) {
             forme.visite(this);
         }
