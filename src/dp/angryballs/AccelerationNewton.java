@@ -13,22 +13,20 @@ public class AccelerationNewton extends Acceleration {
 
     @Override
     public Vecteur tester(List<Forme> formes) {
+        int i = 0;
         int d = formes.size() - 1;
 
         double masses[] = new double[d];   // les masses des autres billes
         Vecteur C[] = new Vecteur[d];      // les positions des autres billes
 
-        for (int i = 0; i < d; ++i) {
-            Forme other = formes.get(i);
-
+        for (Forme other : formes) {
             if(forme.getClef() == other.getClef()) {
-                formes.remove(i);
-                i--;
                 continue;
             }
 
             masses[i] = other.masse();
             C[i] = other.getPosition();
+            i++;
         }
 
         //------------------ à présent on calcule le champ de gravité exercé par les autres billes sur cette bille ------------------
