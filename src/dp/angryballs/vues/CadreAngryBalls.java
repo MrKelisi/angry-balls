@@ -51,7 +51,7 @@ public class CadreAngryBalls extends Frame implements VueBillard {
         this.arrêterBilles = new Button("arrêter les billes");
         this.bas.add(this.arrêterBilles);
 
-        MouseAdapterBillePilotee handler = new MouseAdapterBillePilotee(billard.formes);
+        MouseAdapterBillePilotee handler = new MouseAdapterBillePilotee(billard.formes, this);
         billard.addMouseListener(handler);
         billard.addMouseMotionListener(handler);
     }

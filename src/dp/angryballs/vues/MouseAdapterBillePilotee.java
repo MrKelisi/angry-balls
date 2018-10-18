@@ -9,21 +9,43 @@ import mesmaths.geometrie.base.Vecteur;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MouseAdapterBillePilotee extends MouseAdapter implements ObservableMouvement{
+    private static final Point POSITION_CURSEUR = new Point(100, 100);
+
     private List<Forme> formes;
     private Forme formeAccrochee;
-    private Point source;
-    private long momentLancer;
     private ArrayList<ObserveurMouvement> observeurs;
+    private Window window;
+    private Cursor defaultCursor;
+    private Cursor blankCursor;
+    boolean ignoreMouseMove;
+    private Point source;
+    private Robot r;
 
-    public MouseAdapterBillePilotee(List<Forme> formes) {
+    public MouseAdapterBillePilotee(List<Forme> formes, Window window) {
         this.formes = formes;
         this.formeAccrochee = null;
         observeurs = new ArrayList<>();
+        this.window = window;
+
+        defaultCursor = window.getCursor();
+        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+                cursorImg, new Point(0, 0), "blank cursor");
+
+        ignoreMouseMove = false;
         source = null;
+
+        try {
+            r = new Robot();
+        }
+        catch (AWTException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -37,8 +59,12 @@ public class MouseAdapterBillePilotee extends MouseAdapter implements Observable
                     f.getPosition().y + rayon > e.getPoint().y) {
 
                 f.prendre(this);
-
+                window.setCursor(blankCursor);
                 formeAccrochee = f;
+
+                Color color = formeAccrochee.getColor();
+                Color outline = new Color(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue());
+                formeAccrochee.setOutline(outline);
                 break;
             }
         }
@@ -53,20 +79,29 @@ public class MouseAdapterBillePilotee extends MouseAdapter implements Observable
             return;
         }
 
+        window.setCursor(defaultCursor);
         formeAccrochee.relacher();
-        source = null;
+        formeAccrochee.setOutline(formeAccrochee.getColor());
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        super.mouseDragged(e);
+        if(ignoreMouseMove) {
+            ignoreMouseMove = false;
+        }
+        else {
+            super.mouseDragged(e);
 
-        if(formeAccrochee != null && source != null) {
-            Vecteur mouvement = new Vecteur(e.getX() - source.getX(), e.getY() - source.getY());
+            if (formeAccrochee != null && source != null) {
+                Vecteur mouvement = new Vecteur(e.getX() - source.getX(), e.getY() - source.getY());
 
-            for(ObserveurMouvement observeur : observeurs) {
-                observeur.onMove(mouvement);
+                for (ObserveurMouvement observeur : observeurs) {
+                    observeur.onMove(mouvement);
+                }
             }
+
+            ignoreMouseMove = true;
+            r.mouseMove(POSITION_CURSEUR.x, POSITION_CURSEUR.y);
         }
 
         source = e.getPoint();

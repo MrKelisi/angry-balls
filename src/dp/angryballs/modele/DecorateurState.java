@@ -10,10 +10,4 @@ public class DecorateurState extends DecorateurBille {
         super(billeDecoree);
         state = new DefaultState(billeDecoree);
     }
-
-
-    @Override
-    public void deplacer(double deltaT) {
-        state.deplacer(deltaT);
-    }
 }

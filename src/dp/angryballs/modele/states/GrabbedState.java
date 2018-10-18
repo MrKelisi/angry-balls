@@ -4,7 +4,7 @@ import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.ObserveurMouvement;
 import mesmaths.geometrie.base.Vecteur;
 
-public class GrabbedState extends PausedState implements ObserveurMouvement {
+public class GrabbedState extends StateBille implements ObserveurMouvement {
     private Long temps;
 
     public GrabbedState(Bille parent) {
@@ -15,10 +15,10 @@ public class GrabbedState extends PausedState implements ObserveurMouvement {
     public void onMove(Vecteur offset) {
         if(temps != null) {
             double diff = System.currentTimeMillis() - temps;
-            parent.setVitesse(offset.produit(1.0/diff));
+            Vecteur vitesse = parent.getVitesse().somme(offset.produit(10000.0/(diff*parent.masse())));
+            parent.setVitesse(vitesse);
         }
 
-        parent.setPosition(parent.getPosition().somme(offset));
         temps = System.currentTimeMillis();
     }
 }

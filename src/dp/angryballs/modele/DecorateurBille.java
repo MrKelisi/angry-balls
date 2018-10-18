@@ -102,4 +102,14 @@ public abstract class DecorateurBille implements Bille {
     public void setPosition(Vecteur position) {
         billeDecoree.setPosition(position);
     }
+
+    @Override
+    public Color getOutline() {
+        return billeDecoree.getOutline();
+    }
+
+    @Override
+    public void setOutline(Color color) {
+        billeDecoree.setOutline(color);
+    }
 }

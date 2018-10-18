@@ -14,6 +14,8 @@ public interface Forme {
     double masse();
     void deplacer(double deltaT);
     Color getColor();
+    Color getOutline();
+    void setOutline(Color color);
     void visite(VisiteurForme v);
     void collisionContour(double abscisseCoinHautGauche, double ordonnéeCoinHautGauche, double largeur, double hauteur);
     void gestionAcceleration(List<Forme> billes);

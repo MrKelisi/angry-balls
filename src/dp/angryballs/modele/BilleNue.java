@@ -15,6 +15,7 @@ public class BilleNue implements Bille {
     private Vecteur acceleration;
     private double rayon;           // rayon > 0
     private Color couleur;
+    private Color outline;
     public  static double ro = 1;   // masse volumique
 
     private int clef;
@@ -25,6 +26,7 @@ public class BilleNue implements Bille {
         this.vitesse      = vitesse;
         this.acceleration = acceleration;
         this.couleur      = couleur;
+        this.outline      = couleur;
         this.clef         = BilleNue.prochaineClef++;
         setRayon(rayon);
     }
@@ -165,6 +167,16 @@ public class BilleNue implements Bille {
         }
 
         this.position = position;
+    }
+
+    @Override
+    public Color getOutline() {
+        return outline;
+    }
+
+    @Override
+    public void setOutline(Color color) {
+        outline = color;
     }
 }
 
