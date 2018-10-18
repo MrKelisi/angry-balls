@@ -19,14 +19,16 @@ public class PanneauAjoutBilles extends Panel {
 
     public PanneauAjoutBilles() {
         super();
-        setBackground(Color.lightGray);
+        setBackground(new Color(0xEEEEEE));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        labelAjoutBilles = new Label("Création de billes");
+        labelAjoutBilles = new Label("Création de billes", Label.CENTER);
         listDecorators = new ArrayList<>();
         sliderRayon = new JSlider(15,100,30);
         colorChooser = new JColorChooser(Color.BLACK);
         createButton = new Button("Créer");
+
+        labelAjoutBilles.setFont(new Font("Arial", Font.BOLD, 26));
 
         try {
             Collection<Class<? extends DecorateurBille>> classes = Outils.getClasses("dp.angryballs.modele.comportements", DecorateurBille.class);
@@ -58,8 +60,11 @@ public class PanneauAjoutBilles extends Panel {
         colorChooser.setPreviewPanel(new JPanel());
 
         add(labelAjoutBilles);
+        add(new Label("Comportements :", Label.LEFT));
         for(BoutonComportement bc : listDecorators) add(bc.getCheckbox());
+        add(new Label("Rayon :", Label.LEFT));
         add(sliderRayon);
+        add(new Label("Couleur :", Label.LEFT));
         add(colorChooser);
         add(createButton);
     }

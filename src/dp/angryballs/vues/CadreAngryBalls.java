@@ -36,7 +36,7 @@ public class CadreAngryBalls extends Frame implements VueBillard {
         this.add(this.bas,BorderLayout.SOUTH);
 
         droite = new PanneauAjoutBilles();
-        droite.setPreferredSize(new Dimension(300, getHeight()));
+        droite.setPreferredSize(new Dimension(280, getHeight()));
         this.add(this.droite, BorderLayout.EAST);
 
 
