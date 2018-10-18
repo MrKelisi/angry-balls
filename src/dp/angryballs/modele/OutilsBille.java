@@ -53,10 +53,10 @@ public class OutilsBille {
      * @return true si il y a collision et dans ce cas les positions et vecteurs vitesses des 2 billes impliquées dans le choc sont modifiées
      * si renvoie false, il n'y a pas de collision et les billes sont laissées intactes
      * */
-    public static void gestionCollisionBilleBille(Bille cetteBille, Bille other) {
+    public static boolean gestionCollisionBilleBille(Bille cetteBille, Bille other) {
         //--- on cherche à présent la 1ère des autres billes avec laquelle cetteBille est en collision ---------------------
         //-------------- on suppose qu'il ne peut y avoir de collision qui implique plus de deux billes à la fois ---------------
-        Collisions.CollisionBilleBille(
+        return Collisions.CollisionBilleBille(
             cetteBille.getPosition(),
             cetteBille.getRayon(),
             cetteBille.getVitesse(),
