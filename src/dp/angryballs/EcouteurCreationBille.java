@@ -33,7 +33,7 @@ public class EcouteurCreationBille implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         Vecteur p = Vecteur.créationAléatoire(0, 0, 100, 100); //TODO changer les valeurs
         Vecteur v = Vecteur.créationAléatoire(-0.1, -0.1, 0.1, 0.1); //TODO changer les valeurs
-        Bille bille = new BilleNue(p, panel.getRayon(), v, panel.getColor()); //TODO: changer les valeurs
+        Bille bille = new BilleNue(p, panel.getRayon(), v, panel.getColor());
 
         for(BoutonComportement bc : panel.getDecorators()) {
             try {
