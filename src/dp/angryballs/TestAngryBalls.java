@@ -8,6 +8,7 @@ import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.BilleNue;
 import dp.angryballs.modele.comportements.*;
 import dp.angryballs.vues.CadreAngryBalls;
+import dp.angryballs.vues.SonCollision;
 import mesmaths.geometrie.base.Vecteur;
 
 /**
@@ -94,5 +95,8 @@ public class TestAngryBalls {
         cadre.lancerBilles.addActionListener(écouteurBoutonLancer);             //TODO maladroit : à changer
         cadre.arrêterBilles.addActionListener(écouteurBoutonArrêter);           //TODO maladroit : à changer
         cadre.droite.getCreateButton().addActionListener(ecouteurCreationBille);
+
+        SonCollision sc = new SonCollision();
+        Collision.addObserver(sc);
     }
 }
