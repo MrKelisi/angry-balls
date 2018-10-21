@@ -1,28 +1,28 @@
 package dp.angryballs;
 
-import dp.angryballs.modele.Forme;
+import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.VisiteurForme;
 
 import java.util.List;
 
 public abstract class Collision implements VisiteurForme {
-    protected Forme forme;
+    protected Bille bille;
 
-    public Collision(Forme forme) {
-        if(forme == null) {
-            throw new NullPointerException("Forme null");
+    public Collision(Bille bille) {
+        if(bille == null) {
+            throw new NullPointerException("Bille null");
         }
 
-        this.forme = forme;
+        this.bille = bille;
     }
 
-    public void tester(List<Forme> formes) {
-        for(Forme forme : formes) {
-            if(this.forme.getClef() == forme.getClef()) {
+    public void tester(List<Bille> billes) {
+        for(Bille bille : billes) {
+            if(this.bille.getClef() == bille.getClef()) {
                 continue;
             }
 
-            forme.visite(this);
+            bille.visite(this);
         }
     }
 }

@@ -1,21 +1,20 @@
 package dp.angryballs;
 
-import dp.angryballs.modele.Forme;
-import dp.angryballs.modele.VisiteurForme;
+import dp.angryballs.modele.Bille;
 import mesmaths.geometrie.base.Vecteur;
 
 import java.util.List;
 
 public abstract class Acceleration {
-    protected Forme forme;
+    protected Bille bille;
 
-    public Acceleration(Forme forme) {
-        if(forme == null) {
-            throw new NullPointerException("Forme null");
+    public Acceleration(Bille bille) {
+        if(bille == null) {
+            throw new NullPointerException("Bille null");
         }
 
-        this.forme = forme;
+        this.bille = bille;
     }
 
-    public abstract Vecteur tester(List<Forme> formes);
+    public abstract Vecteur tester(List<Bille> billes);
 }

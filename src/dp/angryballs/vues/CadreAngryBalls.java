@@ -5,7 +5,7 @@ import java.awt.image.BufferStrategy;
 import java.util.List;
 
 
-import dp.angryballs.modele.Forme;
+import dp.angryballs.modele.Bille;
 import outilsvues.EcouteurTerminaison;
 
 import outilsvues.Outils;
@@ -26,7 +26,7 @@ public class CadreAngryBalls extends Frame implements VueBillard {
 
     EcouteurTerminaison ecouteurTerminaison;
 
-    public CadreAngryBalls(String titre, String message, List<Forme> billes) throws HeadlessException {
+    public CadreAngryBalls(String titre, String message, List<Bille> billes) throws HeadlessException {
         super(titre);
         Outils.place(this, 0.33, 0.33, 0.5, 0.5);
         this.ecouteurTerminaison = new EcouteurTerminaison(this);
@@ -51,7 +51,7 @@ public class CadreAngryBalls extends Frame implements VueBillard {
         this.arrêterBilles = new Button("arrêter les billes");
         this.bas.add(this.arrêterBilles);
 
-        MouseAdapterBillePilotee handler = new MouseAdapterBillePilotee(billard.formes, this);
+        MouseAdapterBillePilotee handler = new MouseAdapterBillePilotee(billard.billes, this);
         billard.addMouseListener(handler);
         billard.addMouseMotionListener(handler);
     }

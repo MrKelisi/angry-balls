@@ -4,7 +4,6 @@ import java.awt.*;
 import java.util.List;
 
 import dp.angryballs.modele.Bille;
-import dp.angryballs.modele.Forme;
 import dp.angryballs.modele.VisiteurForme;
 
 
@@ -12,11 +11,11 @@ import dp.angryballs.modele.VisiteurForme;
  * responsable du dessin des billes
  */
 public class Billard extends Canvas implements VisiteurForme {
-    List<Forme> formes;
+    List<Bille> billes;
     Graphics g;
 
-    public Billard(List<Forme> formes) {
-        this.formes = formes;
+    public Billard(List<Bille> billes) {
+        this.billes = billes;
     }
 
     /* (non-Javadoc)
@@ -27,8 +26,8 @@ public class Billard extends Canvas implements VisiteurForme {
         g = graphics;
         graphics.clearRect(0,0, getWidth(), getHeight());
 
-        for(Forme forme : formes) {
-            forme.visite(this);
+        for(Bille bille : billes) {
+            bille.visite(this);
         }
     }
 

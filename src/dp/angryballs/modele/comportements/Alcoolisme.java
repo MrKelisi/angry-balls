@@ -2,11 +2,9 @@ package dp.angryballs.modele.comportements;
 
 import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.DecorateurBille;
-import dp.angryballs.modele.Forme;
 import mesmaths.geometrie.base.Vecteur;
 
 import java.util.List;
-import java.util.Random;
 
 public class Alcoolisme extends DecorateurBille {
     private double tempsTremblement;
@@ -23,7 +21,7 @@ public class Alcoolisme extends DecorateurBille {
     }
 
     @Override
-    public void gestionAcceleration(List<Forme> billes) {
+    public void gestionAcceleration(List<Bille> billes) {
         if(tempsTremblement <= 0) {
             super.gestionAcceleration(billes);
             Vecteur vitesse = getVitesse();

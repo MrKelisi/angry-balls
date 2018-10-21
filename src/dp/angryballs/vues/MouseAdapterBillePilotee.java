@@ -1,7 +1,6 @@
 package dp.angryballs.vues;
 
 import dp.angryballs.modele.Bille;
-import dp.angryballs.modele.Forme;
 import dp.angryballs.modele.ObservableMouvement;
 import dp.angryballs.modele.ObserveurMouvement;
 import mesmaths.geometrie.base.Vecteur;
@@ -16,8 +15,8 @@ import java.util.List;
 public class MouseAdapterBillePilotee extends MouseAdapter implements ObservableMouvement{
     private static final Point POSITION_CURSEUR = new Point(100, 100);
 
-    private List<Forme> formes;
-    private Forme formeAccrochee;
+    private List<Bille> billes;
+    private Bille billeAccrochee;
     private ArrayList<ObserveurMouvement> observeurs;
     private Window window;
     private Cursor defaultCursor;
@@ -26,9 +25,9 @@ public class MouseAdapterBillePilotee extends MouseAdapter implements Observable
     private Point source;
     private Robot r;
 
-    public MouseAdapterBillePilotee(List<Forme> formes, Window window) {
-        this.formes = formes;
-        this.formeAccrochee = null;
+    public MouseAdapterBillePilotee(List<Bille> billes, Window window) {
+        this.billes = billes;
+        this.billeAccrochee = null;
         observeurs = new ArrayList<>();
         this.window = window;
 
@@ -51,7 +50,7 @@ public class MouseAdapterBillePilotee extends MouseAdapter implements Observable
     @Override
     public void mousePressed(MouseEvent e) {
         super.mouseClicked(e);
-        for(Forme f : formes) {
+        for(Bille f : billes) {
             double rayon = ((Bille) f).getRayon(); //TODO: c'est moche
             if(f.getPosition().x - rayon < e.getPoint().x &&
                     f.getPosition().x + rayon > e.getPoint().x &&
@@ -60,11 +59,11 @@ public class MouseAdapterBillePilotee extends MouseAdapter implements Observable
 
                 f.prendre(this);
                 window.setCursor(blankCursor);
-                formeAccrochee = f;
+                billeAccrochee = f;
 
-                Color color = formeAccrochee.getColor();
+                Color color = billeAccrochee.getColor();
                 Color outline = new Color(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue());
-                formeAccrochee.setOutline(outline);
+                billeAccrochee.setOutline(outline);
                 break;
             }
         }
@@ -75,13 +74,13 @@ public class MouseAdapterBillePilotee extends MouseAdapter implements Observable
         super.mouseReleased(e);
 
 
-        if(formeAccrochee == null) {
+        if(billeAccrochee == null) {
             return;
         }
 
         window.setCursor(defaultCursor);
-        formeAccrochee.relacher();
-        formeAccrochee.setOutline(formeAccrochee.getColor());
+        billeAccrochee.relacher();
+        billeAccrochee.setOutline(billeAccrochee.getColor());
     }
 
     @Override
@@ -92,7 +91,7 @@ public class MouseAdapterBillePilotee extends MouseAdapter implements Observable
         else {
             super.mouseDragged(e);
 
-            if (formeAccrochee != null && source != null) {
+            if (billeAccrochee != null && source != null) {
                 Vecteur mouvement = new Vecteur(e.getX() - source.getX(), e.getY() - source.getY());
 
                 for (ObserveurMouvement observeur : observeurs) {

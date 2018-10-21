@@ -95,7 +95,7 @@ public class BilleNue implements Bille {
      * A ce niveau le vecteur acceleration est mis à zéro (c'est à dire pas d'acceleration)
      * */
     @Override
-    public void gestionAcceleration(List<Forme> billes) {
+    public void gestionAcceleration(List<Bille> billes) {
         this.getAcceleration().set(Vecteur.VECTEURNUL);
     }
 
@@ -109,9 +109,9 @@ public class BilleNue implements Bille {
      * si renvoie false, il n'y a pas de collision et les billes sont laissées intactes
      * */
     @Override
-    public void gestionCollision(List<Forme> formes) {
+    public void gestionCollision(List<Bille> billes) {
         CollisionBille collisionBille = new CollisionBille(this);
-        collisionBille.tester(formes);
+        collisionBille.tester(billes);
     }
 
 

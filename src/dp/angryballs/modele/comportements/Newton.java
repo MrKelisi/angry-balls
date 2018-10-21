@@ -4,8 +4,6 @@ import dp.angryballs.Acceleration;
 import dp.angryballs.AccelerationNewton;
 import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.DecorateurBille;
-import dp.angryballs.modele.Forme;
-import dp.angryballs.modele.OutilsBille;
 
 import java.util.List;
 
@@ -16,9 +14,9 @@ public class Newton extends DecorateurBille {
     }
 
     @Override
-    public void gestionAcceleration(List<Forme> formes) {
+    public void gestionAcceleration(List<Bille> billes) {
         Acceleration acceleration = new AccelerationNewton(billeDecoree);
-        billeDecoree.gestionAcceleration(formes);
-        getAcceleration().ajoute(acceleration.tester(formes));
+        billeDecoree.gestionAcceleration(billes);
+        getAcceleration().ajoute(acceleration.tester(billes));
     }
 }

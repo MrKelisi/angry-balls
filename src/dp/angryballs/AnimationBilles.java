@@ -3,7 +3,6 @@ package dp.angryballs;
 import java.util.List;
 
 import dp.angryballs.modele.Bille;
-import dp.angryballs.modele.Forme;
 import dp.angryballs.vues.VueBillard;
 
 /**
@@ -13,7 +12,7 @@ import dp.angryballs.vues.VueBillard;
  * ICI : IL N'Y A RIEN A CHANGER
  * */
 public class AnimationBilles implements Runnable {
-    List<Forme> formes;   // la liste de toutes les billes en mouvement
+    List<Bille> billes;   // la liste de toutes les billes en mouvement
     VueBillard vueBillard;    // la vue responsable du dessin des billes
     private Thread thread;    // pour lancer et arrêter les billes
     private double deltaT;
@@ -21,28 +20,28 @@ public class AnimationBilles implements Runnable {
     private static final double COEFF = 0.5;
 
     /**
-     * @param formes
+     * @param billes
      * @param vueBillard
      */
-    public AnimationBilles(List<Forme> formes, VueBillard vueBillard) {
-        this.formes = formes;
+    public AnimationBilles(List<Bille> billes, VueBillard vueBillard) {
+        this.billes = billes;
         this.vueBillard = vueBillard;
         deltaT = 10;
     }
 
-    public void ajouterForme(Forme forme) {
-        formes.add(forme);
+    public void ajouterForme(Bille bille) {
+        billes.add(bille);
     }
 
     @Override
     public void run() {
         try {
             while (!Thread.interrupted()) {                         // gestion du mouvement
-                for(Forme forme : formes) {
-                    forme.deplacer(deltaT);                 // mise à jour position et vitesse de cette bille
-                    forme.gestionAcceleration(formes);      // calcul de l'accélération subie par cette bille
-                    forme.gestionCollision(formes);
-                    forme.collisionContour( 0, 0, vueBillard.largeurBillard(), vueBillard.hauteurBillard());
+                for(Bille bille : billes) {
+                    bille.deplacer(deltaT);                 // mise à jour position et vitesse de cette bille
+                    bille.gestionAcceleration(billes);      // calcul de l'accélération subie par cette bille
+                    bille.gestionCollision(billes);
+                    bille.collisionContour( 0, 0, vueBillard.largeurBillard(), vueBillard.hauteurBillard());
                 }
 
                 vueBillard.miseAJour();                                // on prévient la vue qu'il faut redessiner les billes

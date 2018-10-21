@@ -1,26 +1,26 @@
 package dp.angryballs;
 
-import dp.angryballs.modele.Forme;
+import dp.angryballs.modele.Bille;
 import mesmaths.geometrie.base.Vecteur;
 import mesmaths.mecanique.MecaniquePoint;
 
 import java.util.List;
 
 public class AccelerationNewton extends Acceleration {
-    public AccelerationNewton(Forme forme) {
-        super(forme);
+    public AccelerationNewton(Bille bille) {
+        super(bille);
     }
 
     @Override
-    public Vecteur tester(List<Forme> formes) {
+    public Vecteur tester(List<Bille> billes) {
         int i = 0;
-        int d = formes.size() - 1;
+        int d = billes.size() - 1;
 
         double masses[] = new double[d];   // les masses des autres billes
         Vecteur C[] = new Vecteur[d];      // les positions des autres billes
 
-        for (Forme other : formes) {
-            if(forme.getClef() == other.getClef()) {
+        for (Bille other : billes) {
+            if(bille.getClef() == other.getClef()) {
                 continue;
             }
 
@@ -31,6 +31,6 @@ public class AccelerationNewton extends Acceleration {
 
         //------------------ à présent on calcule le champ de gravité exercé par les autres billes sur cette bille ------------------
 
-        return  MecaniquePoint.champGravitéGlobal(this.forme.getPosition(), masses, C);
+        return  MecaniquePoint.champGravitéGlobal(this.bille.getPosition(), masses, C);
     }
 }

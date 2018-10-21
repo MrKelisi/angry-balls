@@ -2,11 +2,10 @@ package dp.angryballs;
 
 import java.awt.Color;
 import java.util.List;
-import java.util.Vector;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.BilleNue;
-import dp.angryballs.modele.Forme;
 import dp.angryballs.modele.comportements.*;
 import dp.angryballs.vues.CadreAngryBalls;
 import mesmaths.geometrie.base.Vecteur;
@@ -20,7 +19,7 @@ public class TestAngryBalls {
     public static void main(String[] args) {
         //------------------- création de la liste (pour l'instant vide) des billes -----------------------
 
-        List<Forme> billes = new CopyOnWriteArrayList<>();
+        List<Bille> billes = new CopyOnWriteArrayList<>();
 
         //---------------- création de la vue responsable du dessin des billes -------------------------
 

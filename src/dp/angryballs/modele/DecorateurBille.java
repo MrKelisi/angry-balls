@@ -54,7 +54,7 @@ public abstract class DecorateurBille implements Bille {
     }
 
     @Override
-    public void gestionAcceleration(List<Forme> billes) {
+    public void gestionAcceleration(List<Bille> billes) {
         billeDecoree.gestionAcceleration(billes);
     }
 
@@ -64,7 +64,7 @@ public abstract class DecorateurBille implements Bille {
     }
 
     @Override
-    public void gestionCollision(List<Forme> billes) {
+    public void gestionCollision(List<Bille> billes) {
         billeDecoree.gestionCollision(billes);
     }
 
