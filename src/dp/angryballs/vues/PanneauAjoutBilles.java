@@ -1,9 +1,9 @@
 package dp.angryballs.vues;
 
 import dp.angryballs.Outils;
+import dp.angryballs.controleurs.EcouteurBouton;
+import dp.angryballs.controleurs.EcouteurBoutonCreer;
 import dp.angryballs.modele.DecorateurBille;
-import dp.angryballs.vues.controles.BoutonControle;
-import dp.angryballs.vues.controles.BoutonControleCreer;
 
 import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
@@ -16,7 +16,7 @@ public class PanneauAjoutBilles extends Panel {
     private ArrayList<BoutonComportement> listDecorators;
     private JSlider sliderRayon;
     private JColorChooser colorChooser;
-    private BoutonControle createButton;
+    private EcouteurBouton ecouteurBoutonCreer;
 
     public PanneauAjoutBilles() {
         super();
@@ -54,7 +54,9 @@ public class PanneauAjoutBilles extends Panel {
         }
         colorChooser.setPreviewPanel(new JPanel());
 
-        createButton = new BoutonControleCreer("Créer", this);
+        Button boutonCreer = new Button("Créer");
+        ecouteurBoutonCreer = new EcouteurBoutonCreer(this);
+        boutonCreer.addActionListener(ecouteurBoutonCreer);
 
 
         //-------------- Ajout des composants au panneau ----------------------------
@@ -70,11 +72,11 @@ public class PanneauAjoutBilles extends Panel {
         add(new Label("Couleur :", Label.LEFT));
         add(colorChooser);
 
-        add(createButton.getButton());
+        add(boutonCreer);
     }
 
-    public BoutonControle getCreateButton() {
-        return createButton;
+    public EcouteurBouton getEcouteurBoutonCreer() {
+        return ecouteurBoutonCreer;
     }
 
     public ArrayList<BoutonComportement> getDecorators() {

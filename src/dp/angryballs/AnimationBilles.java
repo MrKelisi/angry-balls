@@ -1,14 +1,10 @@
 package dp.angryballs;
 
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
+import dp.angryballs.controleurs.*;
 import dp.angryballs.modele.Bille;
 import dp.angryballs.vues.*;
-import dp.angryballs.vues.controles.BoutonControleArreter;
-import dp.angryballs.vues.controles.BoutonControleCreer;
-import dp.angryballs.vues.controles.BoutonControleLancer;
 
 /**
  * responsable de l'animation des billes, c-à-d responsable du mouvement de la liste des billes. met perpétuellement à jour les billes. 
@@ -16,7 +12,7 @@ import dp.angryballs.vues.controles.BoutonControleLancer;
  * 
  * ICI : IL N'Y A RIEN A CHANGER
  * */
-public class AnimationBilles implements Runnable, Observer {
+public class AnimationBilles implements Runnable, ObserverBouton {
     List<Bille> billes;   // la liste de toutes les billes en mouvement
     VueBillard vueBillard;    // la vue responsable du dessin des billes
     private Thread thread;    // pour lancer et arrêter les billes
@@ -115,15 +111,12 @@ public class AnimationBilles implements Runnable, Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        if(o instanceof BoutonControleLancer) {
+    public void buttonPressed(ObservableBouton observable, Object arg) {
+        if(observable instanceof EcouteurBoutonLancer)
             lancerAnimation();
-        }
-        else if(o instanceof BoutonControleArreter) {
+        else if(observable instanceof EcouteurBoutonArreter)
             arrêterAnimation();
-        }
-        else if(o instanceof BoutonControleCreer && arg instanceof Bille) {
+        else if(observable instanceof EcouteurBoutonCreer && arg instanceof Bille)
             ajouterBille((Bille) arg);
-        }
     }
 }

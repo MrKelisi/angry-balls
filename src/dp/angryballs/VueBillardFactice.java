@@ -1,8 +1,7 @@
 package dp.angryballs;
 
+import dp.angryballs.controleurs.ObserverBouton;
 import dp.angryballs.vues.VueBillard;
-
-import java.util.Observer;
 
 public class VueBillardFactice implements VueBillard {
 
@@ -25,6 +24,6 @@ public class VueBillardFactice implements VueBillard {
     }
 
     @Override
-    public void addObserver(Observer o) {
+    public void addObserver(ObserverBouton o) {
     }
 }

@@ -1,7 +1,7 @@
 package dp.angryballs.vues;
 
 
-import java.util.Observer;
+import dp.angryballs.controleurs.ObserverBouton;
 
 /**
  * contrat respecté par toute vue capable de dessiner la liste des billes
@@ -22,5 +22,5 @@ public interface VueBillard
 
     public void montrer();
 
-    public void addObserver(Observer o);
+    public void addObserver(ObserverBouton o);
 }

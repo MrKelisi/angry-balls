@@ -3,13 +3,9 @@ package dp.angryballs.vues;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.List;
-import java.util.Observer;
 
-
+import dp.angryballs.controleurs.*;
 import dp.angryballs.modele.Bille;
-import dp.angryballs.vues.controles.BoutonControle;
-import dp.angryballs.vues.controles.BoutonControleArreter;
-import dp.angryballs.vues.controles.BoutonControleLancer;
 import outilsvues.EcouteurTerminaison;
 
 import outilsvues.Outils;
@@ -23,8 +19,8 @@ import outilsvues.Outils;
  * */
 public class CadreAngryBalls extends Frame implements VueBillard {
     private Billard billard;
-    private BoutonControle boutonLancer, boutonArreter;
     private Panel bas;
+    private EcouteurBouton ecouteurBoutonLancer, ecouteurBoutonArreter;
     public PanneauAjoutBilles droite;
 
     EcouteurTerminaison ecouteurTerminaison;
@@ -47,11 +43,15 @@ public class CadreAngryBalls extends Frame implements VueBillard {
 
         this.add(this.billard);
 
-        boutonLancer = new BoutonControleLancer("Lancer les billes");
-        bas.add(boutonLancer.getButton());
+        Button boutonLancer = new Button("Lancer les billes");
+        ecouteurBoutonLancer = new EcouteurBoutonLancer();
+        boutonLancer.addActionListener(ecouteurBoutonLancer);
+        bas.add(boutonLancer);
 
-        boutonArreter = new BoutonControleArreter("Arrêter les billes");
-        bas.add(boutonArreter.getButton());
+        Button boutonArret = new Button("Arrêter les billes");
+        ecouteurBoutonArreter = new EcouteurBoutonArreter();
+        boutonArret.addActionListener(ecouteurBoutonArreter);
+        bas.add(boutonArret);
 
         MouseAdapterBillePilotee handler = new MouseAdapterBillePilotee(billard.billes, this);
         billard.addMouseListener(handler);
@@ -85,10 +85,10 @@ public class CadreAngryBalls extends Frame implements VueBillard {
     }
 
     @Override
-    public void addObserver(Observer o) {
-        boutonLancer.addObserver(o);
-        boutonArreter.addObserver(o);
-        droite.getCreateButton().addObserver(o);
+    public void addObserver(ObserverBouton observeur) {
+        ecouteurBoutonLancer.ajoutObserveur(observeur);
+        ecouteurBoutonArreter.ajoutObserveur(observeur);
+        droite.getEcouteurBoutonCreer().ajoutObserveur(observeur);
     }
 
 }
