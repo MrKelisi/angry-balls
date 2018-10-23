@@ -11,7 +11,7 @@ public class TestCadreAngryBallsSeul {
      */
     public static void main(String[] args) {
         Vector<Bille> billes = new Vector<>();
-        CadreAngryBalls cadre = new CadreAngryBalls("angry balls", "animation de billes marrantes", billes);
+        CadreAngryBalls cadre = new CadreAngryBalls("angry balls", billes);
         cadre.montrer();
     }
 }

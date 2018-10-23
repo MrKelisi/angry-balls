@@ -24,9 +24,7 @@ public class TestAngryBalls {
 
         //---------------- création de la vue responsable du dessin des billes -------------------------
 
-        CadreAngryBalls cadre = new CadreAngryBalls("Angry balls",
-                                                "Animation de billes ayant des comportements différents. Situation idéale pour mettre en place le DP Decorator",
-                                                billes);
+        CadreAngryBalls cadre = new CadreAngryBalls("Angry balls", billes);
 
         cadre.montrer(); // on rend visible la vue
 
@@ -70,7 +68,7 @@ public class TestAngryBalls {
         billes.add(new BilleMvtNewtonArret(p4, rayon, v4,  Color.black));
         */
 
-        billes.add(new Rebond(new RectiligneUniforme(new BilleNue(p0, rayon * 3, new Vecteur(0.01,0.01), Color.red))));
+        billes.add(new Rebond(new RectiligneUniforme(new BilleNue(p0, rayon * 3, new Vecteur(0.05,0.05), Color.red))));
 
 
         //---------------------- ici finit la partie à changer -------------------------------------------------------------
@@ -82,19 +80,6 @@ public class TestAngryBalls {
         //-------------------- création de l'objet responsable de l'animation (c'est un thread séparé) -----------------------
 
         AnimationBilles animationBilles = new AnimationBilles(billes, cadre);
-
-        //----------------------- mise en place des écouteurs de boutons qui permettent de contrôler (un peu...) l'application -----------------
-
-        EcouteurBoutonLancer écouteurBoutonLancer = new EcouteurBoutonLancer(animationBilles);
-        EcouteurBoutonArreter écouteurBoutonArrêter = new EcouteurBoutonArreter(animationBilles);
-        EcouteurCreationBille ecouteurCreationBille = new EcouteurCreationBille(animationBilles, cadre.droite, rayon);
-
-        //------------------------- activation des écouteurs des boutons et ça tourne tout seul ------------------------------
-
-
-        cadre.lancerBilles.addActionListener(écouteurBoutonLancer);             //TODO maladroit : à changer
-        cadre.arrêterBilles.addActionListener(écouteurBoutonArrêter);           //TODO maladroit : à changer
-        cadre.droite.getCreateButton().addActionListener(ecouteurCreationBille);
 
         SonCollision sc = new SonCollision();
         Collision.addObserver(sc);

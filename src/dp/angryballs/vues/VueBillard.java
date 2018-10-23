@@ -1,6 +1,8 @@
 package dp.angryballs.vues;
 
 
+import java.util.Observer;
+
 /**
  * contrat respecté par toute vue capable de dessiner la liste des billes
  * 
@@ -19,4 +21,6 @@ public interface VueBillard
     public void miseAJour();
 
     public void montrer();
+
+    public void addObserver(Observer o);
 }

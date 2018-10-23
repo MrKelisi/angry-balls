@@ -2,37 +2,44 @@ package dp.angryballs.vues;
 
 import dp.angryballs.CollisionObserver;
 import dp.angryballs.modele.Bille;
+import mesmaths.geometrie.base.Vecteur;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 
 public class SonCollision implements CollisionObserver {
-    private InputStream son;
-    private AudioStream as;
+    private static File son;
 
     public SonCollision() {
 
+        try {
+            son = new File("res/bille.wav");
+        } catch(Exception e) {
+            System.err.println("Le fichier audio n'a pas pu être chargé");
+        }
     }
 
     @Override
     public void collides(Bille b1, Bille b2) {
         try {
-            if(son != null) {
-                if(son.available() > 0) {
-                    return;
-                }
-                else {
-                    as.close();
-                    son.close();
-                }
-            }
+            double forceImpact = Math.max(b1.getVitesse().norme(), b2.getVitesse().norme());
+            float gainDecibel = (float) Math.min(forceImpact*8 - 30, 6.0206);   // Limite (-80, 6.0206) : POURQUOI ??
 
-            son = new FileInputStream("res/collision.wav");
-            as = new AudioStream(son);
+            AudioInputStream ais = AudioSystem.getAudioInputStream(son);
+            Clip clip = AudioSystem.getClip();
+            clip.open(ais);
 
-            AudioPlayer.player.start(as);
+            FloatControl control = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            control.setValue(gainDecibel);
+
+            clip.start();
+
         }
         catch(Exception e){
             e.printStackTrace();

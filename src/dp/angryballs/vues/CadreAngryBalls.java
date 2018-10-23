@@ -3,9 +3,13 @@ package dp.angryballs.vues;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.List;
+import java.util.Observer;
 
 
 import dp.angryballs.modele.Bille;
+import dp.angryballs.vues.controles.BoutonControle;
+import dp.angryballs.vues.controles.BoutonControleArreter;
+import dp.angryballs.vues.controles.BoutonControleLancer;
 import outilsvues.EcouteurTerminaison;
 
 import outilsvues.Outils;
@@ -18,15 +22,14 @@ import outilsvues.Outils;
  * 
  * */
 public class CadreAngryBalls extends Frame implements VueBillard {
-    TextField presentation;
-    Billard billard;
-    public Button lancerBilles, arrêterBilles; //TODO "AAAAAHHHHH"
-    Panel bas;
+    private Billard billard;
+    private BoutonControle boutonLancer, boutonArreter;
+    private Panel bas;
     public PanneauAjoutBilles droite;
 
     EcouteurTerminaison ecouteurTerminaison;
 
-    public CadreAngryBalls(String titre, String message, List<Bille> billes) throws HeadlessException {
+    public CadreAngryBalls(String titre, List<Bille> billes) throws HeadlessException {
         super(titre);
         Outils.place(this, 0.33, 0.33, 0.5, 0.5);
         this.ecouteurTerminaison = new EcouteurTerminaison(this);
@@ -39,17 +42,16 @@ public class CadreAngryBalls extends Frame implements VueBillard {
         droite.setPreferredSize(new Dimension(280, getHeight()));
         this.add(this.droite, BorderLayout.EAST);
 
-
         this.billard = new Billard(billes);
         this.billard.setIgnoreRepaint(true);
 
         this.add(this.billard);
 
-        this.lancerBilles = new Button("lancer les billes");
-        this.bas.add(this.lancerBilles);
+        boutonLancer = new BoutonControleLancer("Lancer les billes");
+        bas.add(boutonLancer.getButton());
 
-        this.arrêterBilles = new Button("arrêter les billes");
-        this.bas.add(this.arrêterBilles);
+        boutonArreter = new BoutonControleArreter("Arrêter les billes");
+        bas.add(boutonArreter.getButton());
 
         MouseAdapterBillePilotee handler = new MouseAdapterBillePilotee(billard.billes, this);
         billard.addMouseListener(handler);
@@ -81,4 +83,12 @@ public class CadreAngryBalls extends Frame implements VueBillard {
         this.setVisible(true);
         this.billard.createBufferStrategy(2);
     }
+
+    @Override
+    public void addObserver(Observer o) {
+        boutonLancer.addObserver(o);
+        boutonArreter.addObserver(o);
+        droite.getCreateButton().addObserver(o);
+    }
+
 }
