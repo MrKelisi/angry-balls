@@ -112,11 +112,11 @@ public class AnimationBilles implements Runnable, ObserverBouton {
 
     @Override
     public void buttonPressed(ObservableBouton observable, Object arg) {
-        if(observable instanceof EcouteurBoutonLancer)
+        if(observable instanceof BoutonLancer)
             lancerAnimation();
-        else if(observable instanceof EcouteurBoutonArreter)
+        else if(observable instanceof BoutonArreter)
             arrêterAnimation();
-        else if(observable instanceof EcouteurBoutonCreer && arg instanceof Bille)
+        else if(observable instanceof BoutonCreer && arg instanceof Bille)
             ajouterBille((Bille) arg);
     }
 }

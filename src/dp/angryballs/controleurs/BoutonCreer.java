@@ -6,27 +6,23 @@ import dp.angryballs.vues.BoutonComportement;
 import dp.angryballs.vues.PanneauAjoutBilles;
 import mesmaths.geometrie.base.Vecteur;
 
-import java.awt.event.ActionEvent;
-
-public class EcouteurBoutonCreer extends EcouteurBouton {
+public class BoutonCreer extends Bouton {
 
     private PanneauAjoutBilles panneau;
 
-    public EcouteurBoutonCreer(PanneauAjoutBilles panneauAjoutBilles) {
-        panneau = panneauAjoutBilles;
+    public BoutonCreer(String label, PanneauAjoutBilles panneau) {
+        super(label);
+        this.panneau = panneau;
     }
 
     @Override
-    public void actionPerformed(ActionEvent arg0) {
-        Bille bille = genererBille();
-
-        for(ObserverBouton observeur : observeurs) {
-            observeur.buttonPressed(this, bille);
+    protected void onClick() {
+        for(ObserverBouton ob : observeurs) {
+            ob.buttonPressed(this, genererBille());
         }
     }
 
     private Bille genererBille() {
-
         Vecteur p = Vecteur.créationAléatoire(0, 0, 100, 100);  //TODO changer les valeurs
         Vecteur v = Vecteur.créationAléatoire(-0.1, -0.1, 0.1, 0.1);  //TODO changer les valeurs
         Bille bille = new BilleNue(p, panneau.getRayon(), v, panneau.getColor());

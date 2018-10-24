@@ -20,7 +20,7 @@ import outilsvues.Outils;
 public class CadreAngryBalls extends Frame implements VueBillard {
     private Billard billard;
     private Panel bas;
-    private EcouteurBouton ecouteurBoutonLancer, ecouteurBoutonArreter;
+    private Bouton boutonLancer, boutonArreter;
     public PanneauAjoutBilles droite;
 
     EcouteurTerminaison ecouteurTerminaison;
@@ -43,15 +43,11 @@ public class CadreAngryBalls extends Frame implements VueBillard {
 
         this.add(this.billard);
 
-        Button boutonLancer = new Button("Lancer les billes");
-        ecouteurBoutonLancer = new EcouteurBoutonLancer();
-        boutonLancer.addActionListener(ecouteurBoutonLancer);
+        boutonLancer = new BoutonLancer("Lancer les billes");
         bas.add(boutonLancer);
 
-        Button boutonArret = new Button("Arrêter les billes");
-        ecouteurBoutonArreter = new EcouteurBoutonArreter();
-        boutonArret.addActionListener(ecouteurBoutonArreter);
-        bas.add(boutonArret);
+        boutonArreter = new BoutonArreter("Arrêter les billes");
+        bas.add(boutonArreter);
 
         MouseAdapterBillePilotee handler = new MouseAdapterBillePilotee(billard.billes, this);
         billard.addMouseListener(handler);
@@ -75,9 +71,6 @@ public class CadreAngryBalls extends Frame implements VueBillard {
         g.dispose();
     }
 
-    /* (non-Javadoc)
-     * @see exodecorateur.vues.VueBillard#montrer()
-     */
     @Override
     public void montrer() {
         this.setVisible(true);
@@ -86,9 +79,9 @@ public class CadreAngryBalls extends Frame implements VueBillard {
 
     @Override
     public void addObserver(ObserverBouton observeur) {
-        ecouteurBoutonLancer.ajoutObserveur(observeur);
-        ecouteurBoutonArreter.ajoutObserveur(observeur);
-        droite.getEcouteurBoutonCreer().ajoutObserveur(observeur);
+        boutonLancer.ajoutObserveur(observeur);
+        boutonArreter.ajoutObserveur(observeur);
+        droite.getBoutonCreer().ajoutObserveur(observeur);
     }
 
 }
