@@ -2,11 +2,14 @@ package dp.angryballs;
 
 import java.awt.*;
 import java.io.File;
+import java.io.FileInputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarInputStream;
 
 public class Outils {
     public static <Parent> Collection<Class<? extends Parent>> getClasses(String packageName, Class<Parent> parentClass) throws Exception {
@@ -17,23 +20,42 @@ public class Outils {
             return classes;
         }
 
-        Enumeration resources = classLoader.getResources(packageName.replace(".", "/"));
+        String currentPath = new File(Outils.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath();
+        if(currentPath.endsWith(".jar")) { //TODO: designpatterniser tout ça
+            packageName = packageName.replace(".", "/");
+            JarInputStream jarFile = new JarInputStream(new FileInputStream(currentPath));
+            JarEntry jarEntry;
 
-        List dirs = new ArrayList();
+            while((jarEntry = jarFile.getNextJarEntry()) != null) {
+                if ((jarEntry.getName().startsWith(packageName)) && (jarEntry.getName().endsWith(".class"))) {
+                    String name = jarEntry.getName().replaceAll("/", ".");
+                    Class<?> c = Class.forName(name.substring(0, name.length() - 6));
 
-        while (resources.hasMoreElements()) {
-            URL resource = (URL) resources.nextElement();
-            File directory = new File(resource.getFile());
-            for(File f : directory.listFiles()) {
-                String name = f.getName();
-                if(!name.endsWith(".class")) {
-                    continue;
+                    if (parentClass.isAssignableFrom(c)) {
+                        classes.add((Class<? extends Parent>) c);
+                    }
                 }
+            }
+        }
+        else {
+            Enumeration resources = classLoader.getResources(packageName.replace(".", "/"));
 
-                Class<?> c = Class.forName(packageName + "." + name.substring(0, name.length() - 6));
+            List dirs = new ArrayList();
 
-                if(parentClass.isAssignableFrom(c)) {
-                    classes.add((Class<? extends Parent>) c);
+            while (resources.hasMoreElements()) {
+                URL resource = (URL) resources.nextElement();
+                File directory = new File(resource.getFile());
+                for (File f : directory.listFiles()) {
+                    String name = f.getName();
+                    if (!name.endsWith(".class")) {
+                        continue;
+                    }
+
+                    Class<?> c = Class.forName(packageName + "." + name.substring(0, name.length() - 6));
+
+                    if (parentClass.isAssignableFrom(c)) {
+                        classes.add((Class<? extends Parent>) c);
+                    }
                 }
             }
         }
