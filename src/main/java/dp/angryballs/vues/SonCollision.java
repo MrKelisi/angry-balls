@@ -6,27 +6,55 @@ import mesmaths.geometrie.base.Vecteur;
 
 import javax.sound.sampled.*;
 import java.io.File;
+import java.util.EmptyStackException;
+import java.util.Stack;
 
 public class SonCollision implements CollisionObserver {
-    private static File son;
+    private static final int MAX_SPARE_CLIPS = 5;
+    private File son;
+    private Stack<Clip> availableClips;
 
     public SonCollision() {
-
+        availableClips = new Stack<>();
         try {
             son = new File("res/bille.wav");
-        } catch(Exception e) {
+        }
+        catch(Exception e) {
             System.err.println("Le fichier audio n'a pas pu être chargé");
         }
     }
 
-    @Override
-    public void collides(Bille b1, Bille b2) {
+    private Clip getClip() throws Exception {
         try {
-
+            return availableClips.pop();
+        }
+        catch (EmptyStackException e) {
             AudioInputStream ais = AudioSystem.getAudioInputStream(son);
             Clip clip = AudioSystem.getClip();
             clip.open(ais);
 
+            return clip;
+        }
+    }
+
+    private void recycleClip(Clip clip) {
+        if(availableClips.size() > MAX_SPARE_CLIPS) {
+            clip.close();
+            return;
+        }
+
+        clip.setFramePosition(0);
+        availableClips.push(clip);
+    }
+
+    @Override
+    public void collides(Bille b1, Bille b2) {
+        if(son == null) {
+            return;
+        }
+
+        try {
+            Clip clip = getClip();
             FloatControl master_gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             FloatControl balance = (FloatControl) clip.getControl(FloatControl.Type.BALANCE);
 
@@ -50,7 +78,7 @@ public class SonCollision implements CollisionObserver {
                     return;
                 }
 
-                clip.close();
+                recycleClip(clip);
             };
 
             clip.addLineListener(listener);
@@ -61,4 +89,6 @@ public class SonCollision implements CollisionObserver {
             e.printStackTrace();
         }
     }
+
+
 }
