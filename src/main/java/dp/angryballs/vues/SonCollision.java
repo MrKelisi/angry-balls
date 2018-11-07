@@ -6,10 +6,7 @@ import mesmaths.geometrie.base.Vecteur;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.*;
 import java.io.File;
 import java.io.FileInputStream;
 
@@ -39,10 +36,17 @@ public class SonCollision implements CollisionObserver {
             FloatControl balance = (FloatControl) clip.getControl(FloatControl.Type.BALANCE);
 
             master_gain.setValue(gainDecibel);
-            balance.setValue(0);
 
+            LineListener listener = lineEvent -> {
+                if (lineEvent.getType() != LineEvent.Type.STOP) {
+                    return;
+                }
+
+                clip.close();
+            };
+
+            clip.addLineListener(listener);
             clip.start();
-
         }
         catch(Exception e){
             e.printStackTrace();
