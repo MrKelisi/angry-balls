@@ -35,8 +35,11 @@ public class SonCollision implements CollisionObserver {
             Clip clip = AudioSystem.getClip();
             clip.open(ais);
 
-            FloatControl control = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            control.setValue(gainDecibel);
+            FloatControl master_gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            FloatControl balance = (FloatControl) clip.getControl(FloatControl.Type.BALANCE);
+
+            master_gain.setValue(gainDecibel);
+            balance.setValue(0);
 
             clip.start();
 
