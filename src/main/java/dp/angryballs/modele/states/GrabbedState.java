@@ -15,6 +15,9 @@ public class GrabbedState extends StateBille implements ObserveurMouvement {
     public void onMove(Vecteur offset) {
         if(temps != null) {
             double diff = System.currentTimeMillis() - temps;
+            if(diff <= 0) {
+                return;
+            }
             Vecteur vitesse = parent.getVitesse().somme(offset.produit(10000.0/(diff*parent.masse())));
             parent.setVitesse(vitesse);
         }
