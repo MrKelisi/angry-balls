@@ -9,10 +9,12 @@ import java.io.File;
 
 public class SonCollision implements CollisionObserver {
     private static File son;
+    private VueBillard billard;
 
-    public SonCollision() {
+    public SonCollision(VueBillard billard) {
 
         try {
+            this.billard = billard;
             son = new File("res/bille.wav");
         } catch(Exception e) {
             System.err.println("Le fichier audio n'a pas pu être chargé");
@@ -40,22 +42,20 @@ public class SonCollision implements CollisionObserver {
                     b2.getPosition().difference(b1.getPosition())
                             .produit(b1.getRayon() / (b1.getRayon() + b2.getRayon()))
             );
-            int fenetre = 1000;
+            double fenetre = billard.largeurBillard();
             double pos_y = Math.min(positionImpact.x, fenetre);
-            float bal = (float)pos_y / (float)(fenetre/2) - 1;
+            float bal = (float) (pos_y / (fenetre/2) - 1);
             balance.setValue(bal);
 
             LineListener listener = lineEvent -> {
                 if (lineEvent.getType() != LineEvent.Type.STOP) {
                     return;
                 }
-
                 clip.close();
             };
 
             clip.addLineListener(listener);
             clip.start();
-
         }
         catch(Exception e){
             e.printStackTrace();

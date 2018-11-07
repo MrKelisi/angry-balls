@@ -81,7 +81,7 @@ public class TestAngryBalls {
 
         AnimationBilles animationBilles = new AnimationBilles(billes, cadre);
 
-        SonCollision sc = new SonCollision();
+        SonCollision sc = new SonCollision(animationBilles.vueBillard);
         Collision.addObserver(sc);
     }
 }
