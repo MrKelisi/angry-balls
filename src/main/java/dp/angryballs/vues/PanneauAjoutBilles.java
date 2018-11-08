@@ -1,9 +1,9 @@
 package dp.angryballs.vues;
 
-import dp.angryballs.Outils;
 import dp.angryballs.controleurs.Bouton;
 import dp.angryballs.controleurs.BoutonCreer;
 import dp.angryballs.modele.DecorateurBille;
+import dp.angryballs.reflexion.ClassFinder;
 
 import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
@@ -31,7 +31,7 @@ public class PanneauAjoutBilles extends Panel {
 
         listDecorators = new ArrayList<>();
         try {
-            Collection<Class<? extends DecorateurBille>> classes = Outils.getClasses("dp.angryballs.modele.comportements", DecorateurBille.class);
+            Collection<Class<? extends DecorateurBille>> classes = ClassFinder.getInstance().findClasses("dp.angryballs.modele.comportements", DecorateurBille.class);
             for(Class<? extends DecorateurBille> c : classes)
                 listDecorators.add(new BoutonComportement(c));
         } catch (Exception e) {
