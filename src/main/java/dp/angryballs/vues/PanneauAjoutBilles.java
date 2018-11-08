@@ -18,7 +18,7 @@ public class PanneauAjoutBilles extends Panel {
     private JColorChooser colorChooser;
     private Bouton boutonCreer;
 
-    public PanneauAjoutBilles() {
+    public PanneauAjoutBilles(Billard billard) {
         super();
         setBackground(new Color(0xEEEEEE));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -54,7 +54,7 @@ public class PanneauAjoutBilles extends Panel {
         }
         colorChooser.setPreviewPanel(new JPanel());
 
-        boutonCreer = new BoutonCreer("Créer", this);
+        boutonCreer = new BoutonCreer("Créer", this, billard);
 
 
         //-------------- Ajout des composants au panneau ----------------------------

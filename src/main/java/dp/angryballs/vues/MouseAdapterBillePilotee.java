@@ -51,7 +51,7 @@ public class MouseAdapterBillePilotee extends MouseAdapter implements Observable
     public void mousePressed(MouseEvent e) {
         super.mouseClicked(e);
         for(Bille f : billes) {
-            double rayon = ((Bille) f).getRayon(); //TODO: c'est moche
+            double rayon = f.getRayon();
             if(f.getPosition().x - rayon < e.getPoint().x &&
                     f.getPosition().x + rayon > e.getPoint().x &&
                     f.getPosition().y - rayon < e.getPoint().y &&

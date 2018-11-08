@@ -2,16 +2,18 @@ package dp.angryballs.controleurs;
 
 import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.BilleNue;
+import dp.angryballs.vues.Billard;
 import dp.angryballs.vues.BoutonComportement;
 import dp.angryballs.vues.PanneauAjoutBilles;
 import mesmaths.geometrie.base.Vecteur;
 
 public class BoutonCreer extends Bouton {
-
+    private Billard billard;
     private PanneauAjoutBilles panneau;
 
-    public BoutonCreer(String label, PanneauAjoutBilles panneau) {
+    public BoutonCreer(String label, PanneauAjoutBilles panneau, Billard billard) {
         super(label);
+        this.billard = billard;
         this.panneau = panneau;
     }
 
@@ -23,9 +25,18 @@ public class BoutonCreer extends Bouton {
     }
 
     private Bille genererBille() {
-        Vecteur p = Vecteur.créationAléatoire(0, 0, 100, 100);  //TODO changer les valeurs
-        Vecteur v = Vecteur.créationAléatoire(-0.1, -0.1, 0.1, 0.1);  //TODO changer les valeurs
-        Bille bille = new BilleNue(p, panneau.getRayon(), v, panneau.getColor());
+        Vecteur position;
+        Vecteur vitesse;
+        if(billard == null) {
+            position = new Vecteur(panneau.getRayon(),panneau.getRayon());
+            vitesse = new Vecteur(0,0);
+        }
+        else {
+            position = Vecteur.créationAléatoire(panneau.getRayon(), panneau.getRayon(), billard.getWidth() - panneau.getRayon(), billard.getHeight() - panneau.getRayon());
+            vitesse = Vecteur.créationAléatoire(-0.1, -0.1, 0.1, 0.1);
+        }
+
+        Bille bille = new BilleNue(position, panneau.getRayon(), vitesse, panneau.getColor());
 
         for(BoutonComportement bc : panneau.getDecorators()) {
             try {

@@ -34,14 +34,15 @@ public class CadreAngryBalls extends Frame implements VueBillard {
         this.bas.setBackground(Color.LIGHT_GRAY);
         this.add(this.bas,BorderLayout.SOUTH);
 
-        droite = new PanneauAjoutBilles();
-        droite.setPreferredSize(new Dimension(280, getHeight()));
-        this.add(this.droite, BorderLayout.EAST);
-
         this.billard = new Billard(billes);
         this.billard.setIgnoreRepaint(true);
 
         this.add(this.billard);
+
+        droite = new PanneauAjoutBilles(this.billard);
+        droite.setPreferredSize(new Dimension(280, getHeight()));
+        this.add(this.droite, BorderLayout.EAST);
+
 
         boutonLancer = new BoutonLancer("Lancer les billes");
         bas.add(boutonLancer);
