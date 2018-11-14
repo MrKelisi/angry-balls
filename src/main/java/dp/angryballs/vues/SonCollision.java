@@ -6,7 +6,6 @@ import mesmaths.geometrie.base.Vecteur;
 
 import javax.sound.sampled.*;
 import java.io.File;
-import java.util.concurrent.CountDownLatch;
 
 public class SonCollision implements CollisionObserver {
 
@@ -58,7 +57,7 @@ public class SonCollision implements CollisionObserver {
                 clip.start();
 
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+                e.printStackTrace();
             }
         }).start();
     }
