@@ -13,9 +13,9 @@ public class BilleNue implements Bille {
     private Vecteur position;       // centre de la bille
     private Vecteur vitesse;
     private Vecteur acceleration;
-    private double rayon;           // rayon > 0
     private Color couleur;
     private Color outline;
+    private double rayon;           // rayon > 0
     public  static double ro = 1;   // masse volumique
 
     private int clef;

@@ -8,10 +8,11 @@ import java.util.List;
 
 public class Pesanteur extends DecorateurBille {
 
+    private static Vecteur DEFAULT_GRAVITY = new Vecteur(0, 0.001);
     private Vecteur pesanteur;
 
     public Pesanteur(Bille billeDecoree) {
-        this(billeDecoree, new Vecteur(0, 0.001));
+        this(billeDecoree, DEFAULT_GRAVITY);
     }
 
     public Pesanteur(Bille billeDecoree, Vecteur pesanteur) {

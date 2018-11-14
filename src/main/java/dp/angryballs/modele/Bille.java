@@ -7,30 +7,28 @@ import java.util.List;
 
 public interface Bille {
     int getClef();
+    double masse();
+    double getRayon();
     Vecteur getPosition();
     Vecteur getVitesse();
     Vecteur getAcceleration();
-    void setVitesse(Vecteur vitesse);
-    double masse();
-    void deplacer(double deltaT);
     Color getColor();
     Color getOutline();
+
+    void setRayon(double rayon);
+    void setPosition(Vecteur position);
+    void setVitesse(Vecteur vitesse);
     void setOutline(Color color);
+
     void visite(VisiteurForme v);
-    void collisionContour(double abscisseCoinHautGauche, double ordonnéeCoinHautGauche, double largeur, double hauteur);
+    void deplacer(double deltaT);
+
     void gestionAcceleration(List<Bille> billes);
     void gestionCollision(List<Bille> billes);
+    void collisionContour(double abscisseCoinHautGauche, double ordonneeCoinHautGauche, double largeur, double hauteur);
+
     void prendre(ObservableMouvement observableMouvement);
     void relacher();
 
-    /**
-     * Change la postition de la bille
-     * @param position Position
-     */
-    void setPosition(Vecteur position);
-
-    double getRayon();
     String toString();
-
-    void setRayon(double rayon);
 }

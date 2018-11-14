@@ -52,45 +52,6 @@ public class AnimationBilles implements Runnable, ObserverBouton {
         }
     }
 
-    /**
-     * calcule le maximum de de la norme carrée (pour faire moins de calcul) des vecteurs vitesse de la liste de billes
-     *
-     * */
-    static double maxVitessesCarrées(List<Bille> billes)
-    {
-        double vitesse2Max = 0;
-
-        int i;
-        double vitesse2Courante;
-
-        for (i = 0; i < billes.size(); ++i) {
-            if ((vitesse2Courante = billes.get(i).getVitesse().normeCarrée()) > vitesse2Max) {
-                vitesse2Max = vitesse2Courante;
-            }
-        }
-
-        return vitesse2Max;
-    }
-
-    /**
-     * calcule le minimum  des rayons de a liste des billes
-     *
-     *
-     * */
-    static double minRayons(List<Bille> billes) {
-        double rayonMin, rayonCourant;
-        rayonMin = Double.MAX_VALUE;
-
-        int i;
-        for (i = 0; i < billes.size(); i++) {
-            if ((rayonCourant = billes.get(i).getRayon()) < rayonMin) {
-                rayonMin = rayonCourant;
-            }
-        }
-
-        return rayonMin;
-    }
-
 
     public void lancerAnimation() {
         if (this.thread == null) {
