@@ -67,15 +67,17 @@ public class CadreAngryBalls extends Frame implements VueBillard {
     public void miseAJour() {
         BufferStrategy bufferStrategy = billard.getBufferStrategy();
         Graphics g = bufferStrategy.getDrawGraphics();
-        billard.paint(g);
-        bufferStrategy.show();
+        billard.render(g);
         g.dispose();
+        bufferStrategy.show();
     }
 
     @Override
     public void montrer() {
         this.setVisible(true);
+
         this.billard.createBufferStrategy(2);
+        this.billard.setIgnoreRepaint(true);
     }
 
     @Override
@@ -85,4 +87,9 @@ public class CadreAngryBalls extends Frame implements VueBillard {
         droite.getBoutonCreer().ajoutObserveur(observeur);
     }
 
+    @Override
+    public void paint(Graphics graphics) {
+        super.paint(graphics);
+        miseAJour();
+    }
 }

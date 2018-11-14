@@ -18,11 +18,7 @@ public class Billard extends Canvas implements VisiteurForme {
         this.billes = billes;
     }
 
-    /* (non-Javadoc)
-     * @see java.awt.Canvas#paint(java.awt.Graphics)
-     */
-    @Override
-    public void paint(Graphics graphics) {
+    public void render(Graphics graphics) {
         g = graphics;
         graphics.clearRect(0,0, getWidth(), getHeight());
 

@@ -70,6 +70,8 @@ public class TestAngryBalls {
 
         billes.add(new Rebond(new RectiligneUniforme(new BilleNue(p0, rayon * 3, new Vecteur(0.05,0.05), Color.red))));
 
+        //Affichage des billes
+        cadre.miseAJour();
 
         //---------------------- ici finit la partie à changer -------------------------------------------------------------
 
