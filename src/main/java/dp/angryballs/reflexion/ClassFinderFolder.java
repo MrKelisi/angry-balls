@@ -15,7 +15,7 @@ public class ClassFinderFolder extends ClassFinderCOR {
     @Override
     protected boolean check() {
         try {
-            return new File(ClassFinderJAR.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath().matches(".*/[^.]*");
+            return new File(ClassFinderFolder.class.getProtectionDomain().getCodeSource().getLocation().toURI()).isDirectory();
         }
         catch (Exception e) {
             e.printStackTrace();
