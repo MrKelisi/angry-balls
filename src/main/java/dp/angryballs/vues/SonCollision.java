@@ -8,6 +8,7 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.util.EmptyStackException;
 import java.util.Stack;
+import java.util.concurrent.CountDownLatch;
 
 public class SonCollision implements CollisionObserver {
 
@@ -27,68 +28,52 @@ public class SonCollision implements CollisionObserver {
         }
     }
 
-    private Clip getClip() throws Exception {
-        try {
-            return availableClips.pop();
-        }
-        catch (EmptyStackException e) {
-            AudioInputStream ais = AudioSystem.getAudioInputStream(son);
-            Clip clip = AudioSystem.getClip();
-            clip.open(ais);
-
-            return clip;
-        }
-    }
-
-    private void recycleClip(Clip clip) {
-        if(availableClips.size() > MAX_SPARE_CLIPS) {
-            clip.close();
-            return;
-        }
-
-        clip.setFramePosition(0);
-        availableClips.push(clip);
-    }
-
     @Override
     public void collides(Bille b1, Bille b2) {
-        if(son == null) {
-            return;
-        }
+        new Thread(new Runnable() { // the wrapper thread is unnecessary, unless it blocks on the Clip finishing, see comments
+            public void run() {
+                try {
+                    CountDownLatch countDownLatch = new CountDownLatch(1);
+                    Clip clip = AudioSystem.getClip();
+                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(son);
+                    clip.open(inputStream);
 
-        try {
-            Clip clip = getClip();
-            FloatControl master_gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            FloatControl balance = (FloatControl) clip.getControl(FloatControl.Type.BALANCE);
-
-
-            double forceImpact = Math.max(b1.getVitesse().norme(), b2.getVitesse().norme());
-            float gainDecibel = (float) Math.min(forceImpact*8 - 30, 6.0206);   // Limite (-80, 6.0206) : POURQUOI ??
-            master_gain.setValue(gainDecibel);
+                    FloatControl master_gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                    FloatControl balance = (FloatControl) clip.getControl(FloatControl.Type.BALANCE);
 
 
-            Vecteur positionImpact = b1.getPosition().somme(
-                    b2.getPosition().difference(b1.getPosition())
-                            .produit(b1.getRayon() / (b1.getRayon() + b2.getRayon()))
-            );
-            double fenetre = billard.largeurBillard();
-            double pos_y = Math.min(positionImpact.x, fenetre);
-            float bal = (float) (pos_y / (fenetre/2) - 1);
-            balance.setValue(bal);
+                    double forceImpact = Math.max(b1.getVitesse().norme(), b2.getVitesse().norme());
+                    float gainDecibel = (float) Math.min(forceImpact*8 - 30, 6.0206);   // Limite (-80, 6.0206) : POURQUOI ??
+                    master_gain.setValue(gainDecibel);
 
-            LineListener listener = lineEvent -> {
-                if (lineEvent.getType() != LineEvent.Type.STOP) {
-                    return;
+
+                    Vecteur positionImpact = b1.getPosition().somme(
+                            b2.getPosition().difference(b1.getPosition())
+                                    .produit(b1.getRayon() / (b1.getRayon() + b2.getRayon()))
+                    );
+                    double fenetre = billard.largeurBillard();
+                    double pos_y = Math.min(positionImpact.x, fenetre);
+                    float bal = (float) (pos_y / (fenetre/2) - 1);
+                    balance.setValue(bal);
+
+                    clip.addLineListener(lineEvent -> {
+                        if(lineEvent.getType() != LineEvent.Type.STOP) {
+                            return;
+                        }
+
+                        countDownLatch.countDown();
+                    });
+                    clip.start();
+
+                    countDownLatch.await();
+
+                    clip.close();
+                    inputStream.close();
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
                 }
-                recycleClip(clip);
-            };
-
-            clip.addLineListener(listener);
-            clip.start();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
+            }
+        }).start();
     }
 
 }
