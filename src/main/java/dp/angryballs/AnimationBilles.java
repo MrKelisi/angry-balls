@@ -1,5 +1,6 @@
 package dp.angryballs;
 
+import java.awt.*;
 import java.util.List;
 
 import dp.angryballs.controleurs.*;
@@ -16,7 +17,7 @@ public class AnimationBilles implements Runnable, ObserverBouton {
     List<Bille> billes;   // la liste de toutes les billes en mouvement
     VueBillard vueBillard;    // la vue responsable du dessin des billes
     private Thread thread;    // pour lancer et arrêter les billes
-    private double deltaT;
+    private long targetFPS;
 
     private static final double COEFF = 0.5;
 
@@ -27,7 +28,7 @@ public class AnimationBilles implements Runnable, ObserverBouton {
     public AnimationBilles(List<Bille> billes, VueBillard vueBillard) {
         this.billes = billes;
         this.vueBillard = vueBillard;
-        deltaT = 10;
+        targetFPS = 60;
 
         vueBillard.addObserver(this);
     }
@@ -35,7 +36,16 @@ public class AnimationBilles implements Runnable, ObserverBouton {
     @Override
     public void run() {
         try {
-            while (!Thread.interrupted()) {                         // gestion du mouvement
+            long lastUpdateTime = System.currentTimeMillis();
+            long updateTime;
+            long sleepTime;
+
+            long frameTotalTime = 1000/targetFPS;
+            while (!Thread.interrupted()) {
+                updateTime = System.currentTimeMillis();
+                double deltaT = updateTime - lastUpdateTime;
+                lastUpdateTime = updateTime;
+
                 for(Bille bille : billes) {
                     bille.deplacer(deltaT);                 // mise à jour position et vitesse de cette bille
                     bille.gestionAcceleration(billes);      // calcul de l'accélération subie par cette bille
@@ -43,8 +53,13 @@ public class AnimationBilles implements Runnable, ObserverBouton {
                     bille.collisionContour( 0, 0, vueBillard.largeurBillard(), vueBillard.hauteurBillard());
                 }
 
-                vueBillard.miseAJour();                                // on prévient la vue qu'il faut redessiner les billes
-                Thread.sleep((int) deltaT);                          // deltaT peut être considéré comme le délai entre 2 flashes d'un stroboscope qui éclairerait la scène
+                vueBillard.miseAJour();
+                Toolkit.getDefaultToolkit().sync();
+
+                sleepTime = updateTime + frameTotalTime - System.currentTimeMillis();
+                if(sleepTime > 0) {
+                    Thread.sleep((int) sleepTime);
+                }
             }
         }
         catch (InterruptedException e) {
