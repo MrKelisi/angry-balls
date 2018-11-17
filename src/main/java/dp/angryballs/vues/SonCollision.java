@@ -6,6 +6,7 @@ import mesmaths.geometrie.base.Vecteur;
 
 import javax.sound.sampled.*;
 import java.io.File;
+import java.util.concurrent.CountDownLatch;
 
 public class SonCollision implements CollisionObserver {
 
@@ -20,6 +21,7 @@ public class SonCollision implements CollisionObserver {
         }
         catch(Exception e) {
             System.err.println("Le fichier audio n'a pas pu être chargé");
+            e.printStackTrace();
         }
     }
 
@@ -27,36 +29,68 @@ public class SonCollision implements CollisionObserver {
     public void collides(Bille b1, Bille b2) {
         new Thread(() -> {
             try {
-                Clip clip = AudioSystem.getClip();
-                AudioInputStream inputStream = AudioSystem.getAudioInputStream(son);
-                clip.open(inputStream);
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(son);
+                AudioFormat format = audioInputStream.getFormat();
+
+                SourceDataLine ligne = AudioSystem.getSourceDataLine(format);
+                ligne.open(format);
 
                 double forceImpact = b1.getVitesse().norme() + b2.getVitesse().norme();
                 float gainDecibel = Math.min((float)(forceImpact*10 - 50), MASTER_GAIN_MAX);
-                FloatControl master_gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                FloatControl master_gain = (FloatControl) ligne.getControl(FloatControl.Type.MASTER_GAIN);
                 master_gain.setValue(gainDecibel);
 
 
-                Vecteur positionImpact = b1.getPosition().somme(
+                //TODO: pas supporté sur mon pc ?
+                /*Vecteur positionImpact = b1.getPosition().somme(
                         b2.getPosition().difference(b1.getPosition())
                                 .produit(b1.getRayon() / (b1.getRayon() + b2.getRayon()))
                 );
                 double fenetre = billard.largeurBillard();
                 double pos_y = Math.min(positionImpact.x, fenetre);
                 float bal = Math.min(Math.max((float)(pos_y / (fenetre/2) - 1), -1.0f), 1.0f);
-                FloatControl balance = (FloatControl) clip.getControl(FloatControl.Type.BALANCE);
-                balance.setValue(bal);
+                FloatControl balance = (FloatControl) ligne.getControl(FloatControl.Type.BALANCE);
+                balance.setValue(bal);*/
 
-                clip.addLineListener(lineEvent -> {
-                    if(lineEvent.getType() != LineEvent.Type.STOP) {
-                        return;
-                    }
-                    lineEvent.getLine().close();
-                });
+                int tailleFrame = format.getFrameSize();
 
-                clip.start();
+                int m = (int)(0.01*format.getFrameRate()); //nombre de frames en 1/100ème  seconde (frameRate = fréquence en Herz)
 
-            } catch (Exception e) {
+                int tailleTampon = m * tailleFrame; //nombre d'octets lus en une fois dans la boucle
+
+                byte[] tampon = new byte[tailleTampon];
+
+                ligne.start();
+
+
+                long l = audioInputStream.getFrameLength(); // taille du fichier audio exprimée en nombre de frames
+
+                long q, r;
+
+// l = q*n + r  :  division euclidienne
+
+                q = l/m; //nbre de passages à faire
+                r = l%m; // nbre de frames qu'il restera à lire après la boucle
+                int reste; // nbre d'octets restant à lire après la boucle
+
+                reste = (int)(r*tailleFrame);
+                long p;
+                for ( p = 0 ; p < q; ++p)
+                {
+                    audioInputStream.read(tampon); // lit m frames sur le fichier audio
+                    ligne.write(tampon, 0, tampon.length); // écrit les m frames sur la ligne et donc les envoie sur un haut-parleur
+                }
+
+                audioInputStream.read(tampon, 0, reste); // lit les r  frames restant sur le fichier audio
+                ligne.write(tampon, 0, reste); // écrit les r frames restant sur la ligne et donc les envoie sur un haut-parleur
+
+
+                Thread.sleep(1000); //TODO: valeur
+
+                ligne.close();
+                audioInputStream.close();
+            }
+            catch (Exception e) {
                 e.printStackTrace();
             }
         }).start();
