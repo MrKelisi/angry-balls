@@ -6,16 +6,16 @@ import mesmaths.geometrie.base.Vecteur;
 
 import javax.sound.sampled.*;
 import java.io.File;
-import java.util.concurrent.CountDownLatch;
 
 public class SonCollision implements CollisionObserver {
 
     private static final float MASTER_GAIN_MAX = 6.0206f;
+    private static final float MASTER_GAIN_MIN = -80.0f;
     private File son;
     private VueBillard billard;
 
-    public SonCollision(VueBillard billard) {
-        this.billard = billard;
+    public SonCollision(VueBillard vueBillard) {
+        billard = vueBillard;
         try {
             son = new File("res/bille.wav");
         }
@@ -35,55 +35,51 @@ public class SonCollision implements CollisionObserver {
                 SourceDataLine ligne = AudioSystem.getSourceDataLine(format);
                 ligne.open(format);
 
-                double forceImpact = b1.getVitesse().norme() + b2.getVitesse().norme();
-                float gainDecibel = Math.min((float)(forceImpact*10 - 50), MASTER_GAIN_MAX);
+
+                /* ========== Force de l'impact : volume de l'effet de collision =================================== */
+
+                float        forceImpact = (float)(b1.getVitesse().norme() + b2.getVitesse().norme()) * 6 - 35;
+                float        gainDecibel = Math.min(Math.max(forceImpact, MASTER_GAIN_MIN), MASTER_GAIN_MAX);
                 FloatControl master_gain = (FloatControl) ligne.getControl(FloatControl.Type.MASTER_GAIN);
+
                 master_gain.setValue(gainDecibel);
 
 
-                //TODO: pas supporté sur mon pc ?
-                /*Vecteur positionImpact = b1.getPosition().somme(
+                /* ========== Position de l'impact : collision stéréo ============================================== */
+
+                Vecteur positionImpact = b1.getPosition().somme(
                         b2.getPosition().difference(b1.getPosition())
                                 .produit(b1.getRayon() / (b1.getRayon() + b2.getRayon()))
                 );
-                double fenetre = billard.largeurBillard();
-                double pos_y = Math.min(positionImpact.x, fenetre);
-                float bal = Math.min(Math.max((float)(pos_y / (fenetre/2) - 1), -1.0f), 1.0f);
-                FloatControl balance = (FloatControl) ligne.getControl(FloatControl.Type.BALANCE);
-                balance.setValue(bal);*/
 
-                int tailleFrame = format.getFrameSize();
+                double       largeur      = billard.largeurBillard();
+                float        position     = (float)(positionImpact.x / largeur) * 2 - 1;
+                float        balanceValue = Math.min(Math.max(position, -1f), 1f);
+                FloatControl balance      = (FloatControl) ligne.getControl(FloatControl.Type.BALANCE);
 
-                int m = (int)(0.01*format.getFrameRate()); //nombre de frames en 1/100ème  seconde (frameRate = fréquence en Herz)
+                balance.setValue(balanceValue);
 
-                int tailleTampon = m * tailleFrame; //nombre d'octets lus en une fois dans la boucle
 
-                byte[] tampon = new byte[tailleTampon];
+                /* ========== Lecture du fichier audio ============================================================= */
+
+                int    tailleFrame  = format.getFrameSize();
+                int    m            = (int)(0.01*format.getFrameRate());  // nombre de frames en 1/100ème  seconde (frameRate = fréquence en Hertz)
+                int    tailleTampon = m * tailleFrame;                    // nombre d'octets lus en une fois dans la boucle
+                byte[] tampon       = new byte[tailleTampon];
 
                 ligne.start();
 
+                long l = audioInputStream.getFrameLength();  // taille du fichier audio exprimée en nombre de frames
+                long q = l/m;                                // nbre de passages à faire
+                long r = l%m;                                // nbre de frames qu'il restera à lire après la boucle
+                int reste = (int)(r*tailleFrame);            // nbre d'octets restant à lire après la boucle
 
-                long l = audioInputStream.getFrameLength(); // taille du fichier audio exprimée en nombre de frames
-
-                long q, r;
-
-// l = q*n + r  :  division euclidienne
-
-                q = l/m; //nbre de passages à faire
-                r = l%m; // nbre de frames qu'il restera à lire après la boucle
-                int reste; // nbre d'octets restant à lire après la boucle
-
-                reste = (int)(r*tailleFrame);
-                long p;
-                for ( p = 0 ; p < q; ++p)
-                {
-                    audioInputStream.read(tampon); // lit m frames sur le fichier audio
-                    ligne.write(tampon, 0, tampon.length); // écrit les m frames sur la ligne et donc les envoie sur un haut-parleur
+                for (long p = 0; p < q; ++p) {
+                    audioInputStream.read(tampon);               // lit m frames sur le fichier audio
+                    ligne.write(tampon, 0, tampon.length);  // écrit les m frames sur la ligne et donc les envoie sur un haut-parleur
                 }
-
-                audioInputStream.read(tampon, 0, reste); // lit les r  frames restant sur le fichier audio
-                ligne.write(tampon, 0, reste); // écrit les r frames restant sur la ligne et donc les envoie sur un haut-parleur
-
+                audioInputStream.read(tampon, 0, reste);    // lit les r frames restant sur le fichier audio
+                ligne.write(tampon, 0, reste);              // écrit les r frames restant sur la ligne et donc les envoie sur un haut-parleur
 
                 Thread.sleep(1000); //TODO: valeur
 
