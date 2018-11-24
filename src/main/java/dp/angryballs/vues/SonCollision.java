@@ -8,9 +8,12 @@ import javax.sound.sampled.*;
 import java.io.File;
 
 public class SonCollision implements CollisionObserver {
-
     private static final float MASTER_GAIN_MAX = 6.0206f;
     private static final float MASTER_GAIN_MIN = -80.0f;
+
+    private static final float BALANCE_MIN = -1.0f;
+    private static final float BALANCE_MAX = 1.0f;
+
     private File son;
     private VueBillard billard;
 
@@ -35,7 +38,6 @@ public class SonCollision implements CollisionObserver {
                 SourceDataLine ligne = AudioSystem.getSourceDataLine(format);
                 ligne.open(format);
 
-
                 /* ========== Force de l'impact : volume de l'effet de collision =================================== */
 
                 float        forceImpact = (float)(b1.getVitesse().norme() + b2.getVitesse().norme()) * 6 - 35;
@@ -54,7 +56,7 @@ public class SonCollision implements CollisionObserver {
 
                 double       largeur      = billard.largeurBillard();
                 float        position     = (float)(positionImpact.x / largeur) * 2 - 1;
-                float        balanceValue = Math.min(Math.max(position, -1f), 1f);
+                float        balanceValue = Math.min(Math.max(position, BALANCE_MIN), BALANCE_MAX);
                 FloatControl balance      = (FloatControl) ligne.getControl(FloatControl.Type.BALANCE);
 
                 balance.setValue(balanceValue);
@@ -81,10 +83,14 @@ public class SonCollision implements CollisionObserver {
                 audioInputStream.read(tampon, 0, reste);    // lit les r frames restant sur le fichier audio
                 ligne.write(tampon, 0, reste);              // écrit les r frames restant sur la ligne et donc les envoie sur un haut-parleur
 
-                Thread.sleep(1000); //TODO: valeur
+                //Attente de la lecture du son
+                Thread.sleep((long) (son.length() * 1000 / (format.getFrameSize()*format.getFrameRate())));
 
                 ligne.close();
                 audioInputStream.close();
+            }
+            catch (LineUnavailableException e) {
+
             }
             catch (Exception e) {
                 e.printStackTrace();
