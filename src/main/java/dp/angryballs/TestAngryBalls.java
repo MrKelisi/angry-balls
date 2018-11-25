@@ -30,8 +30,6 @@ public class TestAngryBalls {
 
         //------------- remplissage de la liste avec 4 billes -------------------------------
 
-
-
         double xMax, yMax;
         double vMax = 0.1;
         xMax = cadre.largeurBillard();      // abscisse maximal
@@ -60,24 +58,14 @@ public class TestAngryBalls {
 
         //--------------- ici commence la partie à changer ---------------------------------
 
-        /*
-        billes.add(new BilleMvtRURebond(p0, rayon, v0, Color.red));
-        billes.add(new BilleMvtPesanteurFrottementRebond(p1, rayon, v1, new Vecteur(0,0.001), Color.yellow));
-        billes.add(new BilleMvtNewtonFrottementRebond(p2, rayon, v2, Color.green));
-        billes.add(new BilleMvtRUPasseMurailles(p3, rayon, v3, Color.cyan));
-        billes.add(new BilleMvtNewtonArret(p4, rayon, v4,  Color.black));
-        */
-
-        billes.add(new Rebond(new RectiligneUniforme(new BilleNue(p0, rayon * 3, new Vecteur(0.05,0.05), Color.red))));
+        billes.add(new Rebond(new RectiligneUniforme(new BilleNue(p0, rayon * 3, v0, Color.red))));
+        billes.add(new Pesanteur(new Frottements(new Rebond(new BilleNue(p1, rayon, v1, Color.yellow)))));
+        billes.add(new Newton(new Frottements(new Rebond(new BilleNue(p2, rayon, v2, Color.green)))));
+        billes.add(new PasseMurailles(new RectiligneUniforme(new BilleNue(p3, rayon, v3, Color.cyan))));
+        billes.add(new Newton(new Arret(new BilleNue(p4, rayon, v4, Color.black))));
 
         //Affichage des billes
         cadre.miseAJour();
-
-        //---------------------- ici finit la partie à changer -------------------------------------------------------------
-
-
-        System.out.println("billes = " + billes);
-
 
         //-------------------- création de l'objet responsable de l'animation (c'est un thread séparé) -----------------------
 
