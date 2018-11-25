@@ -21,6 +21,4 @@ public interface VueBillard
     public void miseAJour();
 
     public void montrer();
-
-    public void addObserver(ObserverBouton o);
 }

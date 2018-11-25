@@ -3,10 +3,9 @@ package dp.angryballs;
 import java.awt.*;
 import java.util.List;
 
-import dp.angryballs.controleurs.*;
+import dp.angryballs.vues.boutons.*;
 import dp.angryballs.modele.Bille;
 import dp.angryballs.vues.*;
-import dp.angryballs.vues.boutons.*;
 
 /**
  * responsable de l'animation des billes, c-à-d responsable du mouvement de la liste des billes. met perpétuellement à jour les billes. 
@@ -14,7 +13,7 @@ import dp.angryballs.vues.boutons.*;
  * 
  * ICI : IL N'Y A RIEN A CHANGER
  * */
-public class AnimationBilles implements Runnable, ObserverBouton {
+public class AnimationBilles implements Runnable {
     List<Bille> billes;   // la liste de toutes les billes en mouvement
     VueBillard vueBillard;    // la vue responsable du dessin des billes
     private Thread thread;    // pour lancer et arrêter les billes
@@ -30,8 +29,6 @@ public class AnimationBilles implements Runnable, ObserverBouton {
         this.billes = billes;
         this.vueBillard = vueBillard;
         targetFPS = 60;
-
-        vueBillard.addObserver(this);
     }
 
     @Override
@@ -81,20 +78,5 @@ public class AnimationBilles implements Runnable, ObserverBouton {
             this.thread.interrupt();
             this.thread = null;
         }
-    }
-
-    public void ajouterBille(Bille bille) {
-        billes.add(bille);
-    }
-
-
-    @Override
-    public void buttonPressed(ObservableBouton observable, Object arg) {
-        if(observable instanceof BoutonLancer)
-            lancerAnimation();
-        else if(observable instanceof BoutonArreter)
-            arrêterAnimation();
-        else if(observable instanceof BoutonCreer && arg instanceof Bille)
-            ajouterBille((Bille) arg);
     }
 }

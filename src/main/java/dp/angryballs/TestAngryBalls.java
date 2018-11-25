@@ -67,11 +67,7 @@ public class TestAngryBalls {
         //Affichage des billes
         cadre.miseAJour();
 
-        //-------------------- création de l'objet responsable de l'animation (c'est un thread séparé) -----------------------
-
-        AnimationBilles animationBilles = new AnimationBilles(billes, cadre);
-
-        SonCollision sc = new SonCollision(animationBilles.vueBillard);
+        SonCollision sc = new SonCollision(cadre);
         Collision.addObserver(sc);
     }
 }

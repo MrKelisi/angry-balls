@@ -4,11 +4,9 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.List;
 
+import dp.angryballs.AnimationBilles;
 import dp.angryballs.modele.Bille;
-import dp.angryballs.vues.boutons.Bouton;
-import dp.angryballs.vues.boutons.BoutonArreter;
-import dp.angryballs.vues.boutons.BoutonLancer;
-import dp.angryballs.vues.boutons.ObserverBouton;
+import dp.angryballs.vues.boutons.*;
 import outilsvues.EcouteurTerminaison;
 
 import outilsvues.Outils;
@@ -24,7 +22,8 @@ public class CadreAngryBalls extends Frame implements VueBillard {
     private Billard billard;
     private Panel bas;
     private Bouton boutonLancer, boutonArreter;
-    public PanneauAjoutBilles droite;
+    private PanneauAjoutBilles droite;
+    private AnimationBilles animationBilles;
 
     EcouteurTerminaison ecouteurTerminaison;
 
@@ -56,6 +55,19 @@ public class CadreAngryBalls extends Frame implements VueBillard {
         MouseAdapterBillePilotee handler = new MouseAdapterBillePilotee(billard.billes, this);
         billard.addMouseListener(handler);
         billard.addMouseMotionListener(handler);
+
+        animationBilles = new AnimationBilles(billes, this);
+
+        boutonLancer.ajoutObserveur((ObservableBouton observable, Object arg) -> animationBilles.lancerAnimation());
+
+        boutonArreter.ajoutObserveur((ObservableBouton observable, Object arg) -> animationBilles.arrêterAnimation());
+
+        droite.getBoutonCreer().ajoutObserveur((ObservableBouton observable, Object arg) -> {
+            if(!(arg instanceof Bille)) {
+                return;
+            }
+            billes.add((Bille) arg);
+        });
     }
 
     public double largeurBillard() {
@@ -81,13 +93,6 @@ public class CadreAngryBalls extends Frame implements VueBillard {
 
         this.billard.createBufferStrategy(2);
         this.billard.setIgnoreRepaint(true);
-    }
-
-    @Override
-    public void addObserver(ObserverBouton observeur) {
-        boutonLancer.ajoutObserveur(observeur);
-        boutonArreter.ajoutObserveur(observeur);
-        droite.getBoutonCreer().ajoutObserveur(observeur);
     }
 
     @Override
