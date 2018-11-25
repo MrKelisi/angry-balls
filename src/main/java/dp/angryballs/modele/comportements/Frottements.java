@@ -6,6 +6,9 @@ import mesmaths.mecanique.MecaniquePoint;
 
 import java.util.List;
 
+/**
+ * La bille ralentit lors de son déplacement
+ */
 public class Frottements extends DecorateurBille {
 
     public Frottements(Bille billeDecoree) {

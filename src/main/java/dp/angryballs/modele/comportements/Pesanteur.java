@@ -6,6 +6,9 @@ import mesmaths.geometrie.base.Vecteur;
 
 import java.util.List;
 
+/**
+ * La bille est attirée vers le sol
+ */
 public class Pesanteur extends DecorateurBille {
 
     private static Vecteur DEFAULT_GRAVITY = new Vecteur(0, 0.001);

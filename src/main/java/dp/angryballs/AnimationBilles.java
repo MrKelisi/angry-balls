@@ -6,6 +6,7 @@ import java.util.List;
 import dp.angryballs.controleurs.*;
 import dp.angryballs.modele.Bille;
 import dp.angryballs.vues.*;
+import dp.angryballs.vues.boutons.*;
 
 /**
  * responsable de l'animation des billes, c-à-d responsable du mouvement de la liste des billes. met perpétuellement à jour les billes. 
@@ -85,6 +86,7 @@ public class AnimationBilles implements Runnable, ObserverBouton {
     public void ajouterBille(Bille bille) {
         billes.add(bille);
     }
+
 
     @Override
     public void buttonPressed(ObservableBouton observable, Object arg) {

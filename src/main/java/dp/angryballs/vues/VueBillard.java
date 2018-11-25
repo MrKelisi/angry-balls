@@ -1,7 +1,7 @@
 package dp.angryballs.vues;
 
 
-import dp.angryballs.controleurs.ObserverBouton;
+import dp.angryballs.vues.boutons.ObserverBouton;
 
 /**
  * contrat respecté par toute vue capable de dessiner la liste des billes

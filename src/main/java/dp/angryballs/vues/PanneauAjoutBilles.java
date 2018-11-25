@@ -1,7 +1,7 @@
 package dp.angryballs.vues;
 
-import dp.angryballs.controleurs.Bouton;
-import dp.angryballs.controleurs.BoutonCreer;
+import dp.angryballs.vues.boutons.Bouton;
+import dp.angryballs.vues.boutons.BoutonCreer;
 import dp.angryballs.modele.DecorateurBille;
 import dp.angryballs.reflexion.ClassFinder;
 
@@ -11,6 +11,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Panneau permettant de créer de nouvelles billes
+ */
 public class PanneauAjoutBilles extends Panel {
     private Label labelAjoutBilles;
     private ArrayList<BoutonComportement> listDecorators;

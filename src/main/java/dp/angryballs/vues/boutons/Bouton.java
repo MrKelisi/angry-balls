@@ -1,4 +1,4 @@
-package dp.angryballs.controleurs;
+package dp.angryballs.vues.boutons;
 
 import java.awt.*;
 import java.util.ArrayList;

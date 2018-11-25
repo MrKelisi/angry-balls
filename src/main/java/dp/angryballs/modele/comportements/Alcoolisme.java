@@ -6,6 +6,9 @@ import mesmaths.geometrie.base.Vecteur;
 
 import java.util.List;
 
+/**
+ * Comportement anarchique
+ */
 public class Alcoolisme extends DecorateurBille {
     private double tempsTremblement;
 

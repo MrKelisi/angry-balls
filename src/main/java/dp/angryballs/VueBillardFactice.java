@@ -1,6 +1,6 @@
 package dp.angryballs;
 
-import dp.angryballs.controleurs.ObserverBouton;
+import dp.angryballs.vues.boutons.ObserverBouton;
 import dp.angryballs.vues.VueBillard;
 
 public class VueBillardFactice implements VueBillard {

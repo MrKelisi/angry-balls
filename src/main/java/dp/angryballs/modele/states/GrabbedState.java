@@ -4,6 +4,9 @@ import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.ObserveurMouvement;
 import mesmaths.geometrie.base.Vecteur;
 
+/**
+ * État d'une bille lorsqu'elle est attrapée
+ */
 public class GrabbedState extends StateBille implements ObserveurMouvement {
     private Long temps;
 

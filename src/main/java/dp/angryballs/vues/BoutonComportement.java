@@ -4,6 +4,9 @@ import dp.angryballs.modele.DecorateurBille;
 
 import javax.swing.*;
 
+/**
+ * Bouton de choix d'un comportement
+ */
 public class BoutonComportement {
 
     private Class<? extends DecorateurBille> decorateur;

@@ -7,6 +7,9 @@ import dp.angryballs.modele.DecorateurBille;
 
 import java.util.List;
 
+/**
+ * La bille est attirée par les autres billes
+ */
 public class Newton extends DecorateurBille {
 
     public Newton(Bille billeDecoree) {

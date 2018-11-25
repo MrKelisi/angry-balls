@@ -4,6 +4,9 @@ import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.DecorateurBille;
 import mesmaths.cinematique.Collisions;
 
+/**
+ * La bille rebondit sur les bords
+ */
 public class Rebond extends DecorateurBille {
 
     public Rebond(Bille billeDecoree) {

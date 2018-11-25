@@ -4,6 +4,9 @@ import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.DecorateurBille;
 import mesmaths.cinematique.Collisions;
 
+/**
+ * S'arrête lors de collisions
+ */
 public class Arret extends DecorateurBille {
 
     public Arret(Bille billeDecoree) {

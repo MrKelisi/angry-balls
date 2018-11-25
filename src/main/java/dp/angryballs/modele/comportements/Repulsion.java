@@ -7,6 +7,9 @@ import dp.angryballs.modele.DecorateurBille;
 
 import java.util.List;
 
+/**
+ * La bille repousse les autres billes
+ */
 public class Repulsion extends DecorateurBille {
 
     public Repulsion(Bille billeDecoree) {

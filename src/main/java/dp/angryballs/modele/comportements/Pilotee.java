@@ -7,6 +7,9 @@ import dp.angryballs.modele.ObserveurMouvement;
 import dp.angryballs.modele.states.DefaultState;
 import dp.angryballs.modele.states.GrabbedState;
 
+/**
+ * L'utilisateur peut contrôler la bile à l'aide de la souris
+ */
 public class Pilotee extends DecorateurState {
     private ObservableMouvement current;
 

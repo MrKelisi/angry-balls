@@ -6,6 +6,9 @@ import mesmaths.geometrie.base.Vecteur;
 
 import java.util.List;
 
+/**
+ * Mouvement rectiligne uniforme
+ */
 public class RectiligneUniforme extends DecorateurBille {
 
     public RectiligneUniforme(Bille billeDecoree) {

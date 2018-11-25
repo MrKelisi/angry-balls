@@ -4,8 +4,11 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.List;
 
-import dp.angryballs.controleurs.*;
 import dp.angryballs.modele.Bille;
+import dp.angryballs.vues.boutons.Bouton;
+import dp.angryballs.vues.boutons.BoutonArreter;
+import dp.angryballs.vues.boutons.BoutonLancer;
+import dp.angryballs.vues.boutons.ObserverBouton;
 import outilsvues.EcouteurTerminaison;
 
 import outilsvues.Outils;

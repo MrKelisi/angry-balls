@@ -8,6 +8,9 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.util.concurrent.CountDownLatch;
 
+/**
+ * Classe responsable de jouer un son lors d'une collision
+ */
 public class SonCollision implements CollisionObserver {
 
     private static final float MASTER_GAIN_MAX = 6.0206f;

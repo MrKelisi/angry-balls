@@ -4,6 +4,9 @@ import dp.angryballs.modele.Bille;
 import dp.angryballs.modele.DecorateurBille;
 import mesmaths.cinematique.Collisions;
 
+/**
+ * La bille peut traverser les murs
+ */
 public class PasseMurailles extends DecorateurBille {
 
     public PasseMurailles(Bille billeDecoree) {

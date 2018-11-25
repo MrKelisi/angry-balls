@@ -18,6 +18,10 @@ public class Billard extends Canvas implements VisiteurForme {
         this.billes = billes;
     }
 
+    /**
+     * Dessine les billes
+     * @param graphics Destination du dessin
+     */
     public void render(Graphics graphics) {
         g = graphics;
         graphics.clearRect(0,0, getWidth(), getHeight());
