@@ -5,7 +5,7 @@ import dp.angryballs.modele.Bille;
 import mesmaths.geometrie.base.Vecteur;
 
 import javax.sound.sampled.*;
-import java.io.File;
+import java.net.URL;
 
 /**
  * Classe responsable de jouer un son lors d'une collision
@@ -17,13 +17,13 @@ public class SonCollision implements CollisionObserver {
     private static final float BALANCE_MIN = -1.0f;
     private static final float BALANCE_MAX = 1.0f;
 
-    private File son;
+    private URL son;
     private VueBillard billard;
 
     public SonCollision(VueBillard vueBillard) {
         billard = vueBillard;
         try {
-            son = new File("res/bille.wav");
+            son = getClass().getClassLoader().getResource("bille.wav");
         }
         catch(Exception e) {
             System.err.println("Le fichier audio n'a pas pu être chargé");
@@ -87,7 +87,7 @@ public class SonCollision implements CollisionObserver {
                 ligne.write(tampon, 0, reste);              // écrit les r frames restant sur la ligne et donc les envoie sur un haut-parleur
 
                 //Attente de la lecture du son
-                Thread.sleep((long) (son.length() * 1000 / (format.getFrameSize()*format.getFrameRate())));
+                Thread.sleep((long) (audioInputStream.getFrameLength() * 1000 / format.getFrameRate()));
 
                 ligne.close();
                 audioInputStream.close();
