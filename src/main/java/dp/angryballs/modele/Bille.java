@@ -2,7 +2,7 @@ package dp.angryballs.modele;
 
 import mesmaths.geometrie.base.Vecteur;
 
-import java.awt.Color; //TODO: utiliser une classe couleur ne venant pas d'AWT
+import java.awt.Color;
 import java.util.List;
 
 public interface Bille {
