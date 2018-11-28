@@ -7,7 +7,7 @@ import java.util.Collection;
  * Classe permettant de lister les classes présentes dans un package.
  */
 public class ClassFinder {
-    private static ClassFinder instance;
+    private static volatile ClassFinder instance;
     private ClassFinderCOR cor;
 
     private ClassFinder() {
@@ -40,7 +40,7 @@ public class ClassFinder {
     }
 
     public static ClassFinder getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new ClassFinder();
         }
         return instance;

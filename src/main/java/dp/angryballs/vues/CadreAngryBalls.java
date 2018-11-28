@@ -20,36 +20,31 @@ import outilsvues.Outils;
  * */
 public class CadreAngryBalls extends Frame implements VueBillard {
     private Billard billard;
-    private Panel bas;
-    private Bouton boutonLancer, boutonArreter;
-    private PanneauAjoutBilles droite;
     private AnimationBilles animationBilles;
-
-    EcouteurTerminaison ecouteurTerminaison;
 
     public CadreAngryBalls(String titre, List<Bille> billes) throws HeadlessException {
         super(titre);
         Outils.place(this, 0.33, 0.33, 0.5, 0.5);
-        this.ecouteurTerminaison = new EcouteurTerminaison(this);
+        new EcouteurTerminaison(this);
 
-        this.bas = new Panel();
-        this.bas.setBackground(Color.LIGHT_GRAY);
-        this.add(this.bas,BorderLayout.SOUTH);
+        Panel bas = new Panel();
+        bas.setBackground(Color.LIGHT_GRAY);
+        this.add(bas, BorderLayout.SOUTH);
 
         this.billard = new Billard(billes);
         this.billard.setIgnoreRepaint(true);
 
         this.add(this.billard);
 
-        droite = new PanneauAjoutBilles(this.billard);
+        PanneauAjoutBilles droite = new PanneauAjoutBilles(this.billard);
         droite.setPreferredSize(new Dimension(280, getHeight()));
-        this.add(this.droite, BorderLayout.EAST);
+        this.add(droite, BorderLayout.EAST);
 
 
-        boutonLancer = new BoutonLancer("Lancer les billes");
+        Bouton boutonLancer = new BoutonLancer("Lancer les billes");
         bas.add(boutonLancer);
 
-        boutonArreter = new BoutonArreter("Arrêter les billes");
+        Bouton boutonArreter = new BoutonArreter("Arrêter les billes");
         bas.add(boutonArreter);
 
         MouseAdapterBillePilotee handler = new MouseAdapterBillePilotee(billard.billes, this);

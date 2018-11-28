@@ -16,7 +16,7 @@ public class BilleNue implements Bille {
     private Color couleur;
     private Color outline;
     private double rayon;           // rayon > 0
-    public  static double ro = 1;   // masse volumique
+    public final static double ro = 1;   // masse volumique
 
     private int clef;
     private static int prochaineClef = 0;

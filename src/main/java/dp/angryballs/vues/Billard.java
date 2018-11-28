@@ -16,6 +16,7 @@ public class Billard extends Canvas implements VisiteurForme {
 
     public Billard(List<Bille> billes) {
         this.billes = billes;
+        g = null;
     }
 
     /**

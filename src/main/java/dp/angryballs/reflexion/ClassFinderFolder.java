@@ -29,18 +29,22 @@ public class ClassFinderFolder extends ClassFinderCOR {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Enumeration resources = classLoader.getResources(packageName.replace(".", "/"));
 
-        List dirs = new ArrayList();
-
         while (resources.hasMoreElements()) {
             URL resource = (URL) resources.nextElement();
             File directory = new File(resource.getFile());
-            for (File f : directory.listFiles()) {
-                String name = f.getName();
-                if (!name.endsWith(".class")) {
-                    continue;
-                }
 
-                classes.add(packageName + "." + name.substring(0, name.length() - 6));
+            try {
+                for (File f : directory.listFiles()) {
+                    String name = f.getName();
+                    if (!name.endsWith(".class")) {
+                        continue;
+                    }
+
+                    classes.add(packageName + "." + name.substring(0, name.length() - 6));
+                }
+            }
+            catch (NullPointerException e) {
+
             }
         }
 

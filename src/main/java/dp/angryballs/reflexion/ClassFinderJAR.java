@@ -8,7 +8,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
 public class ClassFinderJAR extends ClassFinderCOR {
-    private static String jarPath;
+    private String jarPath;
 
     public ClassFinderJAR(ClassFinderCOR next) {
         super(next);
@@ -17,8 +17,8 @@ public class ClassFinderJAR extends ClassFinderCOR {
             jarPath = new File(ClassFinderJAR.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath();
         }
         catch (Exception e) {
-            e.printStackTrace();
             jarPath = "";
+            e.printStackTrace();
         }
     }
 
@@ -46,6 +46,8 @@ public class ClassFinderJAR extends ClassFinderCOR {
                 classes.add(name.substring(0, name.length() - 6));
             }
         }
+
+        jarFile.close();
 
         return classes;
     }
