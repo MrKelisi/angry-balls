@@ -74,7 +74,7 @@ public abstract class DecorateurBille implements Bille {
     }
 
     @Override
-    public Color getColor() {
+    public String getColor() {
         return billeDecoree.getColor();
     }
 
@@ -104,12 +104,12 @@ public abstract class DecorateurBille implements Bille {
     }
 
     @Override
-    public Color getOutline() {
+    public String getOutline() {
         return billeDecoree.getOutline();
     }
 
     @Override
-    public void setOutline(Color color) {
+    public void setOutline(String color) {
         billeDecoree.setOutline(color);
     }
 }

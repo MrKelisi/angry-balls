@@ -36,7 +36,7 @@ public class BoutonCreer extends Bouton {
             vitesse = Vecteur.créationAléatoire(-0.1, -0.1, 0.1, 0.1);
         }
 
-        Bille bille = new BilleNue(position, panneau.getRayon(), vitesse, panneau.getColor());
+        Bille bille = new BilleNue(position, panneau.getRayon(), vitesse, String.valueOf(panneau.getColor().getRGB()));
 
         for(BoutonComportement bc : panneau.getDecorators()) {
             try {

@@ -49,9 +49,9 @@ public class Billard extends Canvas implements VisiteurForme {
             s = g2.getStroke();
         }
 
-        g.setColor(bille.getColor());
+        g.setColor(Color.decode(bille.getColor()));
         g.fillOval( xMin, yMin, width, height);
-        g.setColor(bille.getOutline());
+        g.setColor(Color.decode(bille.getOutline()));
 
         if(g2 != null) {
             g2.setStroke(new BasicStroke(5));

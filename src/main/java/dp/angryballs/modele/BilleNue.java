@@ -1,6 +1,5 @@
 package dp.angryballs.modele;
 
-import java.awt.*;
 import java.util.List;
 
 import dp.angryballs.CollisionBille;
@@ -13,15 +12,15 @@ public class BilleNue implements Bille {
     private Vecteur position;       // centre de la bille
     private Vecteur vitesse;
     private Vecteur acceleration;
-    private Color couleur;
-    private Color outline;
+    private String couleur;
+    private String outline;
     private double rayon;           // rayon > 0
     public final static double ro = 1;   // masse volumique
 
     private int clef;
     private static int prochaineClef = 0;
 
-    protected BilleNue(Vecteur centre, double rayon, Vecteur vitesse, Vecteur acceleration, Color couleur) {
+    protected BilleNue(Vecteur centre, double rayon, Vecteur vitesse, Vecteur acceleration, String couleur) {
         this.position     = centre;
         this.vitesse      = vitesse;
         this.acceleration = acceleration;
@@ -31,8 +30,8 @@ public class BilleNue implements Bille {
         setRayon(rayon);
     }
 
-    public BilleNue(Vecteur position, double rayon, Vecteur vitesse, Color couleur) {
-        this(position,rayon,vitesse,new Vecteur(),couleur);
+    public BilleNue(Vecteur position, double rayon, Vecteur vitesse, String couleur) {
+        this(position,rayon,vitesse,new Vecteur(), couleur);
     }
 
 
@@ -141,7 +140,7 @@ public class BilleNue implements Bille {
     }
 
     @Override
-    public Color getColor() {
+    public String getColor() {
         return couleur;
     }
 
@@ -170,12 +169,12 @@ public class BilleNue implements Bille {
     }
 
     @Override
-    public Color getOutline() {
+    public String getOutline() {
         return outline;
     }
 
     @Override
-    public void setOutline(Color color) {
+    public void setOutline(String color) {
         outline = color;
     }
 }

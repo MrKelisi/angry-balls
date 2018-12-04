@@ -2,7 +2,6 @@ package dp.angryballs.modele;
 
 import mesmaths.geometrie.base.Vecteur;
 
-import java.awt.Color;
 import java.util.List;
 
 public interface Bille {
@@ -39,12 +38,12 @@ public interface Bille {
     /**
      * @return Couleur de remplissage de la bille
      */
-    Color getColor();
+    String getColor();
 
     /**
      * @return Couleur du contour de la bille
      */
-    Color getOutline();
+    String getOutline();
 
     /**
      * Change la taille de la bille
@@ -68,7 +67,7 @@ public interface Bille {
      * Change la couleur de contour
      * @param color Nouvelle couleur
      */
-    void setOutline(Color color);
+    void setOutline(String color);
 
     void visite(VisiteurForme v);
 

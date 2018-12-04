@@ -61,9 +61,9 @@ public class MouseAdapterBillePilotee extends MouseAdapter implements Observable
                 window.setCursor(blankCursor);
                 billeAccrochee = f;
 
-                Color color = billeAccrochee.getColor();
+                Color color = Color.decode(billeAccrochee.getColor());
                 Color outline = new Color(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue());
-                billeAccrochee.setOutline(outline);
+                billeAccrochee.setOutline(String.valueOf(outline.getRGB()));
                 break;
             }
         }
