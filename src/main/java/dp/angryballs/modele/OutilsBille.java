@@ -52,6 +52,12 @@ public class OutilsBille {
     public static boolean gestionCollisionBilleBille(Bille cetteBille, Bille other) {
         //--- on cherche à présent la 1ère des autres billes avec laquelle cetteBille est en collision ---------------------
         //-------------- on suppose qu'il ne peut y avoir de collision qui implique plus de deux billes à la fois ---------------
+        if(cetteBille.getPosition().x == other.getPosition().x && cetteBille.getPosition().y == other.getPosition().y) {
+            cetteBille.setVitesse(new Vecteur(1, 1));
+            other.setVitesse(new Vecteur(-1, -1));
+            return true;
+        }
+
         return Collisions.CollisionBilleBille(
             cetteBille.getPosition(),
             cetteBille.getRayon(),
