@@ -24,7 +24,7 @@ public class CadreAngryBalls extends Frame implements VueBillard {
 
     public CadreAngryBalls(String titre, List<Bille> billes) throws HeadlessException {
         super(titre);
-        Outils.place(this, 0.33, 0.33, 0.5, 0.5);
+        Outils.place(this, 0.1, 0.1, 0.8, 0.8);
         new EcouteurTerminaison(this);
 
         Panel bas = new Panel();

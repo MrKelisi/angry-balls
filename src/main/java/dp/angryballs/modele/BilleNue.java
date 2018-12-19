@@ -150,12 +150,12 @@ public class BilleNue implements Bille {
     }
 
     @Override
-    public void prendre(ObservableMouvement observableMouvement) {
+    public void prendre(ObservableMouvement observableMouvement) { //TODO: revoir
 
     }
 
     @Override
-    public void relacher() {
+    public void relacher() { //TODO: revoir
 
     }
 

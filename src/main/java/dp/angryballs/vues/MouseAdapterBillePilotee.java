@@ -55,7 +55,7 @@ public class MouseAdapterBillePilotee extends MouseAdapter implements Observable
             if(f.getPosition().x - rayon < e.getPoint().x &&
                     f.getPosition().x + rayon > e.getPoint().x &&
                     f.getPosition().y - rayon < e.getPoint().y &&
-                    f.getPosition().y + rayon > e.getPoint().y) {
+                    f.getPosition().y + rayon > e.getPoint().y) { //TODO: faire une méthode dans OutilsBille
 
                 f.prendre(this);
                 window.setCursor(blankCursor);

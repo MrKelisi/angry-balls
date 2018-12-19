@@ -3,7 +3,6 @@ package dp.angryballs;
 import java.awt.*;
 import java.util.List;
 
-import dp.angryballs.vues.boutons.*;
 import dp.angryballs.modele.Bille;
 import dp.angryballs.vues.*;
 

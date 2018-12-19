@@ -102,12 +102,12 @@ public interface Bille {
      * Méthode appelée lorsque la bille est attrapée
      * @param observableMouvement Observable du mouvement de la souris
      */
-    void prendre(ObservableMouvement observableMouvement);
+    void prendre(ObservableMouvement observableMouvement); //TODO: à revoir
 
     /**
      * Appelé lorsque la bille est relachée
      */
-    void relacher();
+    void relacher();//TODO: à revoir
 
     String toString();
 }

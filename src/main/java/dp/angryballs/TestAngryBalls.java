@@ -58,7 +58,7 @@ public class TestAngryBalls {
 
         //--------------- ici commence la partie à changer ---------------------------------
 
-        billes.add(new Rebond(new RectiligneUniforme(new BilleNue(p0, rayon * 3, v0, String.valueOf(Color.red.getRGB())))));
+        billes.add(new Rebond(new RectiligneUniforme(new BilleNue(p0, rayon , v0, String.valueOf(Color.red.getRGB())))));
         billes.add(new Pesanteur(new Frottements(new Rebond(new BilleNue(p1, rayon, v1, String.valueOf(Color.yellow.getRGB()))))));
         billes.add(new Newton(new Frottements(new Rebond(new BilleNue(p2, rayon, v2, String.valueOf(Color.green.getRGB()))))));
         billes.add(new PasseMurailles(new RectiligneUniforme(new BilleNue(p3, rayon, v3, String.valueOf(Color.cyan.getRGB())))));
